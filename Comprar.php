@@ -66,6 +66,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/f2c06f6363.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="src/main-style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     </head>
     <style>
         body {
@@ -225,6 +226,13 @@
           /* background-color: var(--vermelho); */
           /* width: 30px; */
         }
+        /* Força o SVG do Pix a acompanhar o tamanho exato da classe display-1 */
+        .icon-pix {
+            width: 1em;
+            height: 1em;
+            font-size: 5rem; /* Ajusta o tamanho idêntico aos ícones do Font Awesome com display-1 */
+            vertical-align: middle;
+        }
     </style>
     <body>
         <header>
@@ -243,10 +251,10 @@
                 <ul class="nav-links fs-3">
                     <li><a href="inicio.php" class="botoes1">Início</a></li>
                     <li><a href="Comprar.php" class="fw-bold text-decoration-underline botoes1">Comprar Pulseira</a></li>
-                    <li><a href="Medicos.php" class="botoes1">Médicos</a></li>
-                    <li><a href="CadastrarMedicos" class="botoes1">Cadastrar Médicos</a></li>
-                    <li><a href="DeletarMedicos.php" class="botoes1">Deletar Médicos</a></li>
-                    <li><a href="AlterarDadosMedicos.php" class="botoes1">Alterar Dados Médicos</a></li>
+                    <!-- <li><a href="Medicos.php" class="botoes1">Médicos</a></li> -->
+                    <!-- <li><a href="CadastrarMedicos" class="botoes1">Cadastrar Médicos</a></li> -->
+                    <!-- <li><a href="DeletarMedicos.php" class="botoes1">Deletar Médicos</a></li> -->
+                    <!-- <li><a href="AlterarDadosMedicos.php" class="botoes1">Alterar Dados Médicos</a></li> -->
                     <a href="Index.html" class="botoes2">Deslogar</a>
                 </ul>
 
@@ -544,15 +552,37 @@
                         <li>Registro de auditoria de eventos.</li>
                         <li>Armazenamento seguro em nuvem.</li>
                     </ul>
+                    <h1 class="text-center fw-bold">Valor</h1>
+                    <br>
+                    <div class="">
+                      <h3 class="text-center text-danger" id="dinheiro">R$70.99</h3>
+                    </div>
+                    <h3 class="text-center">Formas de Pagamento</h3>
+                    <!-- <p></p> -->
+                     <!-- <i class="fa-regular fa-credit-card display-1"></i>  -->
+                     <form action="" class="">
+                        <div class="">
+                            <input type="radio" name="pagamento" id="credito">
+                            <i class="fa-brands fa-cc-mastercard display-1"></i>
+                            <label for="credito"><h3 class="m-0">Cartão de Crédito</h3></label>
+                        </div>
+
+                        <div class="">
+                            <input type="radio" name="pagamento" id="debito">
+                            <i class="fa-brands fa-cc-visa display-1"></i>
+                            <label for="debito"><h3 class="m-0">Cartão de Débito</h3></label>
+                        </div>
+
+                        <div class="">
+                            <input type="radio" name="pagamento" id="pix">
+                            <svg class="icon-pix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path fill="#32BCAD" d="M109.2 112.5l46.6 46.5c12.5 12.5 12.5 32.8 0 45.3l-46.5 46.5c-12.5 12.5-32.8 12.5-45.3 0l-46.5-46.5c-12.5-12.5-12.5-32.8 0-45.3l46.5-46.5c12.5-12.6 32.8-12.6 45.2 0zm293.6                     0l46.5 46.5c12.5 12.5 12.5 32.8 0 45.3l-46.5 46.5c-12.5 12.5-32.8 12.5-45.3 0l-46.5-46.5c-12.5-12.5-12.5-32.8 0-45.3l46.5-46.5c12.6-12.6 32.8-12.6 45.3 0zm-146.8 0l46.5 46.5c12.5 12.5 12.5 32.8 0                     45.3l-46.5 46.5c-12.5 12.5-32.8 12.5-45.3 0l-46.5-46.5c-12.5-12.5-12.5-32.8 0-45.3l46.5-46.5c12.5-12.6 32.8-12.6 45.3 0zm146.8 146.8l46.5 46.5c12.5 12.5 12.5 32.8 0 45.3l-46.5 46.5c-12.5 12.5-32.8                    12.5-45.3 0l-46.5-46.5c-12.5-12.5-12.5-32.8 0-45.3l46.5-46.5c12.6-12.5 32.8-12.5 45.3 0z"/>
+                            </svg>
+                            <label for="pix"><h3 class="m-0">PIX</h3></label>
+                        </div>
+                    </form>
                 </section>
                 <section id="valor" class="text-center">
-                  <h1 class="textcenter fw-bold">Valor</h1>
-                  <br>
-                  <div class="">
-                    <h3 class="text-center text-danger" id="dinheiro">R$70.99</h3>
-                  </div>
-                  <h3>Formas de Pagamento</h3>
-                  <!-- <p></p> -->
                 </section>
             </section>   
             <div class="my-5 py-3"></div>

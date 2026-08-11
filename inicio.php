@@ -141,10 +141,10 @@ button.ativo .spinner {
                 <ul class="nav-links fs-3 text-center" id="links">
                     <li><a href="inicio.php" class="botoes1 fw-bold text-decoration-underline links">Início</a></li>
                     <li><a href="Comprar.php" class="botoes1">Comprar Pulseira</a></li>
-                    <li><a href="Medicos.php" class="botoes1">Médicos</a></li>
-                    <li><a href="CadastrarMedicos" class="botoes1">Cadastrar Médicos</a></li>
-                    <li><a href="DeletarMedicos.php" class="botoes1">Deletar Médicos</a></li>
-                    <li><a href="AlterarDadosMedicos.php" class="botoes1">Alterar Dados Médicos</a></li>
+                    <!-- <li><a href="Medicos.php" class="botoes1">Médicos</a></li> -->
+                    <!-- <li><a href="CadastrarMedicos" class="botoes1">Cadastrar Médicos</a></li> -->
+                    <!-- <li><a href="DeletarMedicos.php" class="botoes1">Deletar Médicos</a></li> -->
+                    <!-- <li><a href="AlterarDadosMedicos.php" class="botoes1">Alterar Dados Médicos</a></li> -->
                     <a href="Index.html" class="botoes2">Deslogar</a>
                 </ul>
                 <div class="menu-toggle" id="mobile-menu">
