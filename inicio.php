@@ -123,6 +123,7 @@ button.ativo .spinner {
 {
     width: 100vw;
 }
+
     </style>
     <body>
         <header>
@@ -141,7 +142,7 @@ button.ativo .spinner {
                 <ul class="nav-links fs-3 text-center" id="links">
                     <li><a href="inicio.php" class="botoes1 fw-bold text-decoration-underline links">Início</a></li>
                     <li><a href="Comprar.php" class="botoes1">Comprar Pulseira</a></li>
-                    <!-- <li><a href="Medicos.php" class="botoes1">Médicos</a></li> -->
+                    <li><a href="Suporte.php" class="botoes1">Suporte Técnico</a></li>
                     <!-- <li><a href="CadastrarMedicos" class="botoes1">Cadastrar Médicos</a></li> -->
                     <!-- <li><a href="DeletarMedicos.php" class="botoes1">Deletar Médicos</a></li> -->
                     <!-- <li><a href="AlterarDadosMedicos.php" class="botoes1">Alterar Dados Médicos</a></li> -->
@@ -168,7 +169,7 @@ button.ativo .spinner {
                     <label for="email" class="form-label fw-bold">Endereço de e-mail:</label>
                     <div class="d-flex align-items-center">
                         <input type="email" class="form-control me-2" id="email" name="email" readonly value="<?php echo htmlspecialchars($dadosHospital['email']); ?>">
-                        <img src="lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('email')">
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('email')">
                     </div>
                 </div>
 
@@ -176,7 +177,7 @@ button.ativo .spinner {
                     <label for="nome" class="form-label fw-bold">Nome do seu hospital:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="nome" name="nome" readonly value="<?php echo htmlspecialchars($dadosHospital['nome']); ?>">
-                        <img src="lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('nome')">
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('nome')">
                     </div>
                 </div>
 
@@ -184,7 +185,7 @@ button.ativo .spinner {
                     <label for="telefone" class="form-label fw-bold">Telefone:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="telefone" name="telefone" maxlength="15" readonly value="<?php echo htmlspecialchars($dadosHospital['telefone']); ?>">
-                        <img src="lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('telefone')">
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('telefone')">
                     </div>
                 </div>
 
@@ -192,7 +193,7 @@ button.ativo .spinner {
                     <label for="cep" class="form-label fw-bold">CEP:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="cep" name="cep" maxlength="9" readonly value="<?php echo htmlspecialchars($dadosHospital['cep']); ?>">
-                        <img src="lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('cep')">
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('cep')">
                     </div>
                 </div>
 
@@ -200,7 +201,7 @@ button.ativo .spinner {
                     <label for="rua" class="form-label fw-bold">Rua:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="rua" name="rua" readonly value="<?php echo htmlspecialchars($dadosHospital['rua']); ?>" placeholder="CEP sem rua.">
-                        <img src="lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('rua')">
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('rua')">
                     </div>
                 </div>
 
@@ -208,7 +209,7 @@ button.ativo .spinner {
                     <label for="cidade" class="form-label fw-bold">Cidade:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="cidade" name="cidade" readonly value="<?php echo htmlspecialchars($dadosHospital['cidade']); ?>">
-                        <img src="lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('cidade')">
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('cidade')">
                     </div>
                 </div>
 
@@ -216,7 +217,7 @@ button.ativo .spinner {
                     <label for="bairro" class="form-label fw-bold">Bairro:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="bairro" name="bairro" readonly value="<?php echo htmlspecialchars($dadosHospital['bairro']); ?>" placeholder="CEP sem bairro.">
-                        <img src="lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('bairro')">
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('bairro')">
                     </div>
                 </div>
 
@@ -224,7 +225,7 @@ button.ativo .spinner {
                     <label for="estado" class="form-label fw-bold">Estado(Digite apenas a sigla):</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="estado" name="estado" readonly value="<?php echo htmlspecialchars($dadosHospital['estado']); ?>">
-                        <img src="lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('estado')">
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('estado')">
                     </div>
                 </div>
 
@@ -232,7 +233,7 @@ button.ativo .spinner {
                     <label for="cnpj" class="form-label fw-bold">CNPJ:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="cnpj" name="cnpj" readonly oninput="mascaraCNPJ(this)" maxlength="18" value="<?php echo htmlspecialchars($dadosHospital['cnpj']); ?>">
-                        <img src="lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('cnpj')">
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('cnpj')">
                     </div>
                 </div>
 
@@ -240,7 +241,7 @@ button.ativo .spinner {
                     <label for="cnes" class="form-label fw-bold">CNES:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="cnes" name="cnes"  maxlength="7" readonly value="<?php echo htmlspecialchars($dadosHospital['cnes']); ?>">
-                        <img src="lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('cnes')">
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('cnes')">
                     </div>
                 </div>
 
@@ -248,7 +249,7 @@ button.ativo .spinner {
                     <label for="senha" class="form-label fw-bold">Senha:</label>
                     <div class="d-flex align-items-center">
                         <input type="password" class="form-control me-2" id="senha" name="senha" minlength="8" readonly value="********">
-                        <img src="lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInputSenha('senha')">
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInputSenha('senha')">
                     </div>
                 </div>
 

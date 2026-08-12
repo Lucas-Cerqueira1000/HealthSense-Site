@@ -226,12 +226,22 @@
           /* background-color: var(--vermelho); */
           /* width: 30px; */
         }
-        /* Força o SVG do Pix a acompanhar o tamanho exato da classe display-1 */
-        .icon-pix {
+
+        /* Garante que os SVG e ícones tenham o mesmo tamanho e comportamento */
+        .icon-pix, .icon-boleto {
             width: 1em;
             height: 1em;
-            font-size: 5rem; /* Ajusta o tamanho idêntico aos ícones do Font Awesome com display-1 */
+            font-size: 5rem; /* Tamanho equivalente à classe display-1 */
+            display: inline-block;
             vertical-align: middle;
+        }
+
+        /* Alinhamento flexível para os itens de pagamento */
+        .opcao-pagamento {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Espaçamento entre ícone e texto */
+            margin-bottom: 15px;
         }
     </style>
     <body>
@@ -251,10 +261,7 @@
                 <ul class="nav-links fs-3">
                     <li><a href="inicio.php" class="botoes1">Início</a></li>
                     <li><a href="Comprar.php" class="fw-bold text-decoration-underline botoes1">Comprar Pulseira</a></li>
-                    <!-- <li><a href="Medicos.php" class="botoes1">Médicos</a></li> -->
-                    <!-- <li><a href="CadastrarMedicos" class="botoes1">Cadastrar Médicos</a></li> -->
-                    <!-- <li><a href="DeletarMedicos.php" class="botoes1">Deletar Médicos</a></li> -->
-                    <!-- <li><a href="AlterarDadosMedicos.php" class="botoes1">Alterar Dados Médicos</a></li> -->
+                    <li><a href="Suporte.php" class="botoes1">Suporte Técnico</a></li>
                     <a href="Index.html" class="botoes2">Deslogar</a>
                 </ul>
 
@@ -268,6 +275,7 @@
         <main class="flex flex-col min-h-screen vw-100 p-0">
             <h1 class="fw-bold text-center">Bem vindo, <?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?>!</h1>
             <h2 class="text-center">Aqui você pode adquirir o produto da Health Sense Services.</h2>
+            
             <section id="principal">
                 <section id="produto">
                     <h1 class="text-center m-4">Nosso Produto</h1>   
@@ -557,31 +565,35 @@
                     <div class="">
                       <h3 class="text-center text-danger" id="dinheiro">R$70.99</h3>
                     </div>
-                    <h3 class="text-center">Formas de Pagamento</h3>
-                    <!-- <p></p> -->
-                     <!-- <i class="fa-regular fa-credit-card display-1"></i>  -->
-                     <form action="" class="">
-                        <div class="">
-                            <input type="radio" name="pagamento" id="credito">
-                            <i class="fa-brands fa-cc-mastercard display-1"></i>
-                            <label for="credito"><h3 class="m-0">Cartão de Crédito</h3></label>
-                        </div>
+                    <h3 class="fw-bold mb-3">Formas de Pagamento</h3>
+                    
+                    <div class="opcao-pagamento">
+                        <i class="fa-brands fa-cc-mastercard display-1"></i>
+                        <label for="credito"><h3 class="m-0">Cartão de Crédito</h3></label>
+                    </div>
 
-                        <div class="">
-                            <input type="radio" name="pagamento" id="debito">
-                            <i class="fa-brands fa-cc-visa display-1"></i>
-                            <label for="debito"><h3 class="m-0">Cartão de Débito</h3></label>
-                        </div>
+                    <div class="opcao-pagamento">
+                        <i class="fa-brands fa-cc-visa display-1"></i>
+                        <label for="debito"><h3 class="m-0">Cartão de Débito</h3></label>
+                    </div>
 
-                        <div class="">
-                            <input type="radio" name="pagamento" id="pix">
-                            <svg class="icon-pix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                <path fill="#32BCAD" d="M109.2 112.5l46.6 46.5c12.5 12.5 12.5 32.8 0 45.3l-46.5 46.5c-12.5 12.5-32.8 12.5-45.3 0l-46.5-46.5c-12.5-12.5-12.5-32.8 0-45.3l46.5-46.5c12.5-12.6 32.8-12.6 45.2 0zm293.6                     0l46.5 46.5c12.5 12.5 12.5 32.8 0 45.3l-46.5 46.5c-12.5 12.5-32.8 12.5-45.3 0l-46.5-46.5c-12.5-12.5-12.5-32.8 0-45.3l46.5-46.5c12.6-12.6 32.8-12.6 45.3 0zm-146.8 0l46.5 46.5c12.5 12.5 12.5 32.8 0                     45.3l-46.5 46.5c-12.5 12.5-32.8 12.5-45.3 0l-46.5-46.5c-12.5-12.5-12.5-32.8 0-45.3l46.5-46.5c12.5-12.6 32.8-12.6 45.3 0zm146.8 146.8l46.5 46.5c12.5 12.5 12.5 32.8 0 45.3l-46.5 46.5c-12.5 12.5-32.8                    12.5-45.3 0l-46.5-46.5c-12.5-12.5-12.5-32.8 0-45.3l46.5-46.5c12.6-12.5 32.8-12.5 45.3 0z"/>
-                            </svg>
-                            <label for="pix"><h3 class="m-0">PIX</h3></label>
-                        </div>
-                    </form>
-                </section>
+                    <div class="opcao-pagamento">
+                        <svg class="icon-pix" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path fill="#32BCAD" d="M109.2 112.5l46.6 46.5c12.5 12.5 12.5 32.8 0 45.3l-46.5 46.5c-12.5 12.5-32.8 12.5-45.3 0l-46.5-46.5c-12.5-12.5-12.5-32.8 0-45.3l46.5-46.5c12.5-12.6 32.8-12.6 45.2 0zm293.6 0l46.5 46.5c12.5 12.5 12.5 32.8 0 45.3l-46.5 46.5c-12.5 12.5-32.8 12.5-45.3 0l-46.5-46.5c-12.5-12.5-12.5-32.8 0-45.3l46.5-46.5c12.6-12.6 32.8-12.6 45.3 0zm-146.8 0l46.5 46.5c12.5 12.5 12.5 32.8 0 45.3l-46.5 46.5c-12.5 12.5-32.8 12.5-45.3 0l-46.5-46.5c-12.5-12.5-12.5-32.8 0-45.3l46.5-46.5c12.5-12.6 32.8-12.6 45.3 0zm146.8 146.8l46.5 46.5c12.5 12.5 12.5 32.8 0 45.3l-46.5 46.5c-12.5 12.5-32.8 12.5-45.3 0l-46.5-46.5c-12.5-12.5-12.5-32.8 0-45.3l46.5-46.5c12.6-12.5 32.8-12.5 45.3 0z"/>
+                        </svg>
+                        <label for="pix"><h3 class="m-0">PIX</h3></label>
+                    </div>
+
+                    <div class="opcao-pagamento">
+                        <svg class="icon-boleto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 5v14M6 5v14M10 5v14M12 5v14M15 5v14M19 5v14M21 5v14"/>
+                        </svg>
+                        <label for="boleto"><h3 class="m-0">Boleto Bancário</h3></label>
+                    </div>
+                    <div class="text-center">
+                        <a href="Pagamento.php" class="btn btn-primary btn-lg btn-block text-center">Ir para o pagamento</a>
+                    </div>
+                </section><br>
                 <section id="valor" class="text-center">
                 </section>
             </section>   
