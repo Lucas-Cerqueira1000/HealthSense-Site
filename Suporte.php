@@ -12,9 +12,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $assunto = mysqli_real_escape_string($con, $_POST['assunto']);
     $mensagem = mysqli_real_escape_string($con, $_POST['mensagem']);          
 
-    // Query de inserção
-    $query = "INSERT INTO tabSuporte (nome, email, assunto ,mensagem) 
-              VALUES ('$nome', '$email', '$assunto', '$mensagem')";
+    // Array preparado para armazenar até 4 caminhos de imagem
+    $caminhos = [NULL, NULL, NULL, NULL];
+
+    // Processamento das Múltiplas Imagens (Máximo 4)
+    if (isset($_FILES['fotos']) && !empty($_FILES['fotos']['name'][0])) {
+        $diretorio_destino = "uploads/";
+
+        // Cria o diretório caso ele não exista
+        if (!is_dir($diretorio_destino)) {
+            mkdir($diretorio_destino, 0755, true);
+        }
+
+        // Garante que processaremos no máximo 4 arquivos
+        $total_arquivos = min(count($_FILES['fotos']['name']), 4);
+
+        for ($i = 0; $i < $total_arquivos; $i++) {
+            $nome_tmp = $_FILES['fotos']['tmp_name'][$i];
+            $nome_original = $_FILES['fotos']['name'][$i];
+            $erro = $_FILES['fotos']['error'][$i];
+
+            if ($erro === UPLOAD_ERR_OK) {
+                // Gera um nome exclusivo para cada imagem enviada
+                $extensao = pathinfo($nome_original, PATHINFO_EXTENSION);
+                $novo_nome = uniqid("img_", true) . '.' . strtolower($extensao);
+                $caminho_final = $diretorio_destino . $novo_nome;
+
+                // Move o arquivo da pasta temporária para o destino final
+                if (move_uploaded_file($nome_tmp, $caminho_final)) {
+                    $caminhos[$i] = "'" . mysqli_real_escape_string($con, $caminho_final) . "'";
+                }
+            }
+        }
+    }
+
+    // Tratamento dos valores para a query SQL (coloca NULL caso a imagem não tenha sido enviada)
+    $img1 = $caminhos[0] ?? "NULL";
+    $img2 = $caminhos[1] ?? "NULL";
+    $img3 = $caminhos[2] ?? "NULL";
+    $img4 = $caminhos[3] ?? "NULL";
+
+    // Inserção dos dados do chamado juntamente com as 4 colunas de imagem
+    $query = "INSERT INTO tabSuporte (nome, email, assunto, mensagem, imagem1, imagem2, imagem3, imagem4) 
+              VALUES ('$nome', '$email', '$assunto', '$mensagem', $img1, $img2, $img3, $img4)";
 
     $result = mysqli_query($con, $query);
 
@@ -80,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             align-items: center;
             text-align: center;
             font-size: 20px;
-            background-color: var(--verde);
+            background-color: var(--verdeescuro);
             padding: 40px;
             color: white;
             border-radius: 40px;
@@ -103,8 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 top: 0;
             }
         }
-        #nome
-        {
+        #nome {
             background-color: var(--verdeescuro);
             width: 100%;
             max-width: 600px;
@@ -113,10 +152,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             border-radius: 5px;
             font-size: 20px;
             color: white;
-            /* cursor: help; */
         }
-        #email
-        {
+        #email {
             background-color: var(--verdeescuro);
             width: 100%;
             max-width: 600px;
@@ -125,10 +162,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             border-radius: 5px;
             font-size: 20px;
             color: white;
-            /* cursor: help; */
         }
-        #assunto 
-        {
+        #principal {
+            background-color:var(--verde);
+            color: white;
+            border-radius: 70px;
+        }
+        #assunto {
             background-color: var(--verdeescuro);
             width: 100%;
             max-width: 600px;
@@ -137,10 +177,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             border-radius: 5px;
             font-size: 20px;
             color: white;
-            /* cursor: help; */
         }
-        #mensagem 
-        {
+        #mensagem {
             background-color: var(--verdeescuro);
             width: 100%;
             max-width: 600px;
@@ -149,10 +187,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             border-radius: 5px;
             font-size: 20px;
             color: white;
-            /* cursor: help; */
         }
-        #contato 
-        {
+        #contato {
             display: flex;
             flex-direction: column;
             justify-content: baseline;
@@ -164,39 +200,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             width: 100%;
             max-width: 600px;
         }
-        #lbl 
-        {
+        #lbl {
             font-size:20px;
             font-weight: bold;
         }
-        #mensagem::placeholder
-        {
-            color: white;
-            opacity: 0.7;
-         
-        }
-        #nome::placeholder
-        {
+        #mensagem::placeholder,
+        #nome::placeholder,
+        #email::placeholder,
+        #assunto::placeholder {
             color: white;
             opacity: 0.7;
         }
-        #email::placeholder
-        {
-            color: white;
-            opacity: 0.7;
+
+        /* Estilos ajustados para o botão e animação do spinner */
+        #btnEnviar {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
-        #assunto::placeholder
-        {
-            color: white;
-            opacity: 0.7;
+
+        .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
-        @media(min-width: 390px)
-        {
-            #btnEnviar
-            {
-                position: relative;
-                top: 4px;
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
             }
+        }
+
+        #btnEnviar.ativo .spinner {
+            display: inline-block;
         }
         </style>
     </head>
@@ -207,21 +248,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 <div class="logo fs-3">
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
-                <div class="theme-switch-wrapper">
-                    <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
-                    <label class="theme-switch" for="checkbox">
-                        <input type="checkbox" id="checkbox" />
-                        <div class="slider round"></div>
-                    </label>
-                </div>
-                   <ul class="nav-links fs-3 text-center" id="links">
-                    <li><a href="inicio.php" class="botoes1">Início</a></li>
+                <ul class="nav-links fs-3 text-center" id="links">
+                    <li><a href="inicial.php" class="botoes1 ">Início</a></li>
+                    <li><a href="inicio.php" class="botoes1">Seus Dados</a></li>
                     <li><a href="Comprar.php" class="botoes1">Comprar Pulseira</a></li>
                     <li><a href="Suporte.php" class="botoes1 fw-bold text-decoration-underline links">Suporte Técnico</a></li>
-                    <!-- <li><a href="CadastrarMedicos" class="botoes1">Cadastrar Médicos</a></li> -->
-                    <!-- <li><a href="DeletarMedicos.php" class="botoes1">Deletar Médicos</a></li> -->
-                    <!-- <li><a href="AlterarDadosMedicos.php" class="botoes1">Alterar Dados Médicos</a></li> -->
                     <a href="Index.html" class="botoes2">Deslogar</a>
+                    <div class="theme-switch-wrapper">
+                        <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
+                        <label class="theme-switch" for="checkbox">
+                            <input type="checkbox" id="checkbox" />
+                            <div class="slider round"></div>
+                        </label>
+                    </div>
                 </ul>
                 <div class="menu-toggle" id="mobile-menu">
                     <span class="bar"></span>
@@ -232,8 +271,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         </header>
 
         <main class="flex flex-col min-h-screen w-full p-0">
+            <br>
+            <section id="principal">
             <section id="projeto">
-                <br><br><br><br><br>
+                <br>
                 <h1 class="text-center m-4">Suporte Técnico HealthSense:</h1>   
                 <p class="text-center container" id="nossoprojeto">Telefone: (11)4125-2288 <br> E-mail: healthsense@gmail.com</p>
             </section>
@@ -242,7 +283,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             <br>
             
             <section id="contato">
-                <form action="contato.php" method="POST">
+                <form id="formCadastro" action="Suporte.php" method="POST" enctype="multipart/form-data">
                     <label id="lbl">Nome da Instituição: - Obrigatório</label>
                     <br>
                     <textarea name="nome" id="nome" placeholder="Digite aqui o nome por extenso." required maxlength="200" data-maxlength="200" rows="5"></textarea>
@@ -263,17 +304,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     <textarea name="mensagem" id="mensagem" placeholder="Digite aqui a sua mensagem." required data-maxlength="700"></textarea>
                     <div id="contador">0 / 700</div>
                     <br>
-                    <label id="lbl">Imagem: - Opcional</label>
-                    <label for="foto"></label>
-                    <input type="file" accept="image/*" name="foto" id="foto">
-                    <br><br>
+                    
+                    <!-- Campo de seleção de imagem do usuário -->
+                    <label id="lbl">Imagens: - Opcional (Máximo 4)</label>
+                    <input type="file" accept="image/*" id="inputFotos" multiple class="form-control bg-dark text-white mb-2">
+                    
+                    <!-- Input oculto manipulado via JS para o envio do formulário -->
+                    <input type="file" name="fotos[]" id="fotosFinal" multiple class="d-none">
+
+                    <!-- Container onde as miniaturas das imagens serão exibidas -->
+                    <div id="previewContainer" class="d-flex flex-wrap gap-2 my-3"></div>
+                    <br>
+
                     <div class="text-center">
-                        <button type="submit" class="btn btn-success mb-2" id="btnEnviar">Enviar Mensagem</button>
+                        <button type="submit" id="btnEnviar" name="btnEnviar" class="btn btn-success">
+                            <span class="texto-botao">Cadastrar</span>
+                            <span class="spinner"></span>
+                        </button>
                         <button type="reset" class="btn btn-danger">Limpar Mensagem</button>
                     </div>
                 </form>
             </section>
-            <br><br><br><br>
+            <br>
+            </section>
+            <br><br>
         </main>
 
         <footer class="mt-auto container-fluid w-full text-center">
@@ -285,24 +339,99 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="js/main-script.js"></script>
         <script src="js/scripts.js"></script>
+
+        <!-- Contador de caracteres -->
         <script>
         document.querySelectorAll('textarea[data-maxlength]').forEach(textarea => {
-  // Pega o limite definido no HTML
-  const limite = parseInt(textarea.getAttribute('data-maxlength'), 10);
-  const contador = textarea.nextElementSibling; // Assume que o contador está logo abaixo
+          const limite = parseInt(textarea.getAttribute('data-maxlength'), 10);
+          const contador = textarea.nextElementSibling;
 
-  textarea.addEventListener('input', () => {
-    // Corta o texto caso ultrapasse o limite
-    if (textarea.value.length > limite) {
-      textarea.value = textarea.value.substring(0, limite);
-    }
-    
-    // Atualiza o texto do contador
-    if (contador) {
-      contador.textContent = `${textarea.value.length} / ${limite}`;
-    }
-  });
-});
+          textarea.addEventListener('input', () => {
+            if (textarea.value.length > limite) {
+              textarea.value = textarea.value.substring(0, limite);
+            }
+            
+            if (contador) {
+              contador.textContent = `${textarea.value.length} / ${limite}`;
+            }
+          });
+        });
+        </script>
+
+        <!-- Gerenciamento de Upload, Limite de 4 Imagens e Remoção -->
+        <script>
+        const inputFotos = document.getElementById('inputFotos');
+        const fotosFinal = document.getElementById('fotosFinal');
+        const previewContainer = document.getElementById('previewContainer');
+        const dt = new DataTransfer();
+
+        inputFotos.addEventListener('change', function (e) {
+            const files = Array.from(e.target.files);
+
+            files.forEach(file => {
+                if (dt.items.length < 4) {
+                    dt.items.add(file);
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Limite Atingido',
+                        text: 'Você só pode anexar no máximo 4 imagens.'
+                    });
+                }
+            });
+
+            fotosFinal.files = dt.files;
+            renderPreview();
+            inputFotos.value = ''; 
+        });
+
+        function renderPreview() {
+            previewContainer.innerHTML = '';
+
+            Array.from(dt.files).forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const div = document.createElement('div');
+                    div.className = 'position-relative d-inline-block';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; border: 1px solid white;">
+                        <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 rounded-circle p-1" style="line-height: 1;" onclick="removerImagem(${index})">&times;</button>
+                    `;
+                    previewContainer.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function removerImagem(index) {
+            dt.items.remove(index);
+            fotosFinal.files = dt.files;
+            renderPreview();
+        }
+
+        document.querySelector('form').addEventListener('reset', () => {
+            dt.items.clear();
+            fotosFinal.files = dt.files;
+            previewContainer.innerHTML = '';
+        });
+        </script>
+
+        <!-- Acionamento do Spinner no Envio -->
+        <script>
+        const formCadastro = document.getElementById("formCadastro");
+        const botaosalvar = document.getElementById("btnEnviar");
+            
+        if (formCadastro && botaosalvar) {
+            formCadastro.addEventListener("submit", function(e) {
+                // 1. Ativa a classe do spinner no botão
+                botaosalvar.classList.add("ativo");
+                
+                // 2. Desabilita cliques adicionais após o clique inicial
+                setTimeout(function() {
+                    botaosalvar.disabled = true;
+                }, 10);
+            });
+        }
         </script>
         <?php echo $alert_script; ?>
     </body>

@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             align-items: center;
             text-align: center;
             font-size: 20px;
-            background-color: var(--verde);
+            background-color: var(--verdeescuro);
             padding: 40px;
             color: white;
             border-radius: 40px;
@@ -97,7 +97,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             gap: 20px;
             flex-wrap: wrap;
         }
-
+        #principal
+        {
+            background-color:var(--verde);
+            color: white;
+            border-radius: 70px;
+        }
         @media(max-width: 1000px) {
             #prints {
                 flex-direction: column;
@@ -211,17 +216,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 <div class="logo fs-3">
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
-                <div class="theme-switch-wrapper">
-                    <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
-                    <label class="theme-switch" for="checkbox">
-                        <input type="checkbox" id="checkbox" />
-                        <div class="slider round"></div>
-                    </label>
-                </div>
                 <ul class="nav-links fs-3">
                     <li><a href="index.html" id="inicio">Início</a></li>
                     <li><a href="contato.php" class="botoes fw-bold text-decoration-underline" id="contato1">Contato</a></li>
                     <li><a href="login.php" class=" botoes" id="entre" >Entre</a></li>
+                    <div class="theme-switch-wrapper">
+                        <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
+                        <label class="theme-switch" for="checkbox">
+                            <input type="checkbox" id="checkbox" />
+                            <div class="slider round"></div>
+                        </label>
+                    </div>
                 </ul>
                 <div class="menu-toggle" id="mobile-menu">
                     <span class="bar"></span>
@@ -232,6 +237,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         </header>
 
         <main class="flex flex-col min-h-screen w-full p-0">
+        <br><br>
+        <section id="principal">
             <section id="projeto">
                 <br><br><br><br><br>
                 <h1 class="text-center m-4">Formas de contatar-nos:</h1>   
@@ -243,22 +250,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             
             <section id="contato">
                 <form action="contato.php" method="POST">
-                    <label id="lbl">Nome:</label>
+                    <label id="lbl">Nome: - Obrigatório</label>
                     <br>
                     <textarea name="nome" id="nome" placeholder="Digite aqui o seu nome completo." required maxlength="200" data-maxlength="200" rows="5"></textarea>
                     <div id="contador">0 / 200</div>
                     <br>
-                    <label id="lbl">E-mail:</label>
+                    <label id="lbl">E-mail: - Obrigatório</label>
                     <br>
                     <textarea name="email" id="email" placeholder="Digite aqui o seu e-mail para lhe contatarmos posteriormente." required maxlength="256" data-maxlength="256" rows="5"></textarea>
                     <div id="contador">0 / 256</div>
                     <br>
-                    <label id="lbl">Assunto:</label>
+                    <label id="lbl">Assunto: - Obrigatório</label>
                     <br>
                     <textarea name="assunto" id="assunto" placeholder="Digite aqui o assunto da mensagem." required data-maxlength="150"></textarea>
                     <div id="contador">0 / 150</div>
                     <br>
-                    <label id="lbl">Mensagem:</label>
+                    <label id="lbl">Mensagem: - Obrigatório</label>
                     <br>
                     <textarea name="mensagem" id="mensagem" placeholder="Digite aqui a sua mensagem." required data-maxlength="700"></textarea>
                     <div id="contador">0 / 700</div>
@@ -267,8 +274,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                         <button type="submit" class="btn btn-success mb-2" id="btnEnviar">Enviar Mensagem</button>
                         <button type="reset" class="btn btn-danger">Limpar Mensagem</button>
                     </div>
+                    <br>
                 </form>
             </section>
+        </section>
             <br><br><br><br>
         </main>
 

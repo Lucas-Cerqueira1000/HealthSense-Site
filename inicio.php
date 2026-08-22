@@ -115,7 +115,7 @@ button.ativo .spinner {
 }
 #formHospital
 {
-    width: 80vw;
+    width: 50vw;
     /* height: 80vh; */
     gap: 40px;
 }
@@ -123,7 +123,13 @@ button.ativo .spinner {
 {
     width: 100vw;
 }
-
+@media(max-width: 940px)
+{
+    #formHospital
+    {
+        width: 90vw;
+    }
+}
     </style>
     <body>
         <header>
@@ -132,21 +138,22 @@ button.ativo .spinner {
                 <div class="logo fs-3">
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
-                <div class="theme-switch-wrapper">
-                    <span id="mode-label" class="fw-bold text-white">Modo Escuro</span>
-                    <label class="theme-switch" for="checkbox">
-                        <input type="checkbox" id="checkbox" />
-                        <div class="slider round"></div>
-                    </label>
-                </div>
                 <ul class="nav-links fs-3 text-center" id="links">
-                    <li><a href="inicio.php" class="botoes1 fw-bold text-decoration-underline links">Início</a></li>
+                    <li><a href="inicial.php" class="botoes1 ">Início</a></li>
+                    <li><a href="inicio.php" class="botoes1 fw-bold text-decoration-underline links">Seus Dados</a></li>
                     <li><a href="Comprar.php" class="botoes1">Comprar Pulseira</a></li>
                     <li><a href="Suporte.php" class="botoes1">Suporte Técnico</a></li>
                     <!-- <li><a href="CadastrarMedicos" class="botoes1">Cadastrar Médicos</a></li> -->
                     <!-- <li><a href="DeletarMedicos.php" class="botoes1">Deletar Médicos</a></li> -->
                     <!-- <li><a href="AlterarDadosMedicos.php" class="botoes1">Alterar Dados Médicos</a></li> -->
                     <a href="Index.html" class="botoes2">Deslogar</a>
+                    <div class="theme-switch-wrapper">
+                        <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
+                        <label class="theme-switch" for="checkbox">
+                            <input type="checkbox" id="checkbox" />
+                            <div class="slider round"></div>
+                        </label>
+                    </div>
                 </ul>
                 <div class="menu-toggle" id="mobile-menu">
                     <span class="bar"></span>

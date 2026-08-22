@@ -1,39 +1,39 @@
 <?php 
-// session_start();
+session_start();
 
-// if(!isset($_SESSION['usuario_id'])) {
-//     header("Location: login.php");
-//     exit;
-// }
+if(!isset($_SESSION['usuario_id'])) {
+    header("Location: login.php");
+    exit;
+}
 
-// // Configurações do Banco de Dados
-// $host = 'tcc_bd35.mysql.dbaas.com.br';
-// $dbname = 'tcc_bd35';
-// $username = 'tcc_bd35';
-// $password = 'ROSA123456a#';
+// Configurações do Banco de Dados
+$host = 'tcc_bd35.mysql.dbaas.com.br';
+$dbname = 'tcc_bd35';
+$username = 'tcc_bd35';
+$password = 'ROSA123456a#';
 
-// try {
-//     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-//     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-//     // Busca as informações atualizadas do hospital logado
-//     $stmt = $pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
-//     $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
-//     $stmt->execute();
-//     $dadosHospital = $stmt->fetch(PDO::FETCH_ASSOC);
+    // Busca as informações atualizadas do hospital logado
+    $stmt = $pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
+    $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
+    $stmt->execute();
+    $dadosHospital = $stmt->fetch(PDO::FETCH_ASSOC);
     
-//     if (!$dadosHospital) {
-//         echo "Dados do hospital não encontrados.";
-//         exit;
-//     }
+    if (!$dadosHospital) {
+        echo "Dados do hospital não encontrados.";
+        exit;
+    }
     
-//     // Força a atualização do nome da sessão com o dado real vindo do banco
-//     $_SESSION['usuario_nome'] = $dadosHospital['nome'];
+    // Força a atualização do nome da sessão com o dado real vindo do banco
+    $_SESSION['usuario_nome'] = $dadosHospital['nome'];
 
-// } catch (PDOException $e) {
-//     echo "Erro na conexão: " . $e->getMessage();
-//     exit;
-// }
+} catch (PDOException $e) {
+    echo "Erro na conexão: " . $e->getMessage();
+    exit;
+}
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -243,26 +243,34 @@
             gap: 15px; /* Espaçamento entre ícone e texto */
             margin-bottom: 15px;
         }
+        .oculto 
+        {
+            opacity: 0;
+            pointer-events: none; 
+        }
     </style>
     <body>
         <header>
+            <!-- <p id="texto">Voltar ao topo.</p>
+            <button id="btn-topo" class="oculto">↑</button> -->
             <nav class="navbar">
                 <div class="overlay"></div>
                 <div class="logo fs-3">
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
-                <div class="theme-switch-wrapper">
-                    <span id="mode-label" class="fw-bold text-white">Modo Escuro</span>
-                    <label class="theme-switch" for="checkbox">
-                        <input type="checkbox" id="checkbox" />
-                        <div class="slider round"></div>
-                    </label>
-                </div>
                 <ul class="nav-links fs-3">
-                    <li><a href="inicio.php" class="botoes1">Início</a></li>
+                    <li><a href="inicial.php" class="botoes1 ">Início</a></li>
+                    <li><a href="inicio.php" class="botoes1">Seus Dados</a></li>
                     <li><a href="Comprar.php" class="fw-bold text-decoration-underline botoes1">Comprar Pulseira</a></li>
                     <li><a href="Suporte.php" class="botoes1">Suporte Técnico</a></li>
                     <a href="Index.html" class="botoes2">Deslogar</a>
+                    <div class="theme-switch-wrapper">
+                        <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
+                        <label class="theme-switch" for="checkbox">
+                            <input type="checkbox" id="checkbox" />
+                            <div class="slider round"></div>
+                        </label>
+                    </div>
                 </ul>
 
                 <div class="menu-toggle" id="mobile-menu">
@@ -562,19 +570,25 @@
                     </ul>
                     <h1 class="text-center fw-bold">Valor</h1>
                     <br>
-                    <div class="">
+                    <!-- <div class="">
                       <h3 class="text-center text-danger" id="dinheiro">R$70.99</h3>
-                    </div>
-                    <h3 class="fw-bold mb-3">Formas de Pagamento</h3>
+                    </div> -->
+                    <div class="alert alert-warning text-center" role="alert">
+                        <h4 class="alert-heading">Em breve...</h4>
+                        <p>Ainda não temos o produto finalizado, então não temos estimativa de preço.</p>
+                        <hr>
+                        <p class="mb-0">Todavia, estimativas giram em torno de R$70.99</p>
+                    </div>  
+                    <h3 class="fw-bold mb-3 text-info">Formas de Pagamento</h3>
                     
                     <div class="opcao-pagamento">
                         <i class="fa-brands fa-cc-mastercard display-1"></i>
-                        <label for="credito"><h3 class="m-0">Cartão de Crédito</h3></label>
+                        <label for="credito"><h3 class="m-0">Cartão de Crédito (+5%)</h3></label>
                     </div>
 
                     <div class="opcao-pagamento">
                         <i class="fa-brands fa-cc-visa display-1"></i>
-                        <label for="debito"><h3 class="m-0">Cartão de Débito</h3></label>
+                        <label for="debito"><h3 class="m-0">Cartão de Débito (+3%)</h3></label>
                     </div>
 
                     <div class="opcao-pagamento">
@@ -591,7 +605,13 @@
                         <label for="boleto"><h3 class="m-0">Boleto Bancário</h3></label>
                     </div>
                     <div class="text-center">
-                        <a href="Pagamento.php" class="btn btn-primary btn-lg btn-block text-center">Ir para o pagamento</a>
+                        <!-- <button type="button" disabled>
+                            <a href="Pagamento.php" class="btn btn-primary btn-lg btn-block text-center" >Ir para o pagamento</a>
+                        </button> -->
+                            <button type="submit" id="btnCadastrar" name="btnCadastrar" class="btn btn-success" disabled>
+                                <span class="texto-botao">Ir para o pagamento(em breve)</span>
+                                <span class="spinner"></span>
+                            </button>
                     </div>
                 </section><br>
                 <section id="valor" class="text-center">
@@ -673,6 +693,22 @@
         document.querySelector('.carousel-container').addEventListener('mouseleave', () => {
             startTimer();
         });
+        </script>
+        <script>
+                const btnTopo = document.getElementById("btn-topo");
+            window.addEventListener("scroll", function() {
+                if (window.scrollY > 300) {
+                    btnTopo.classList.remove("oculto");
+                } else {
+                    btnTopo.classList.add("oculto");
+                }
+            });
+            btnTopo.addEventListener("click", function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
         </script>
     </body>
 </html>

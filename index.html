@@ -3,7 +3,7 @@
     <head>
         <title>Página Inicial</title>
         <meta charset="utf-8" />
-        <link rel="icon" href="logo1.png">
+        <link rel="icon" href="img/logo1.png">
         <meta
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
@@ -47,6 +47,15 @@
             }
 
             #prints, #telas
+            {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                gap: 20px;
+                flex-wrap: wrap;
+                border-radius: 150px;
+            }
+            #fotos
             {
                 display: flex;
                 flex-direction: row;
@@ -410,19 +419,19 @@
             <nav class="navbar">
                 <div class="overlay"></div>
                 <div class="logo fs-3">
-                    <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
-                </div>
-                <div class="theme-switch-wrapper">
-                    <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
-                    <label class="theme-switch" for="checkbox">
-                        <input type="checkbox" id="checkbox" />
-                        <div class="slider round"></div>
-                    </label>
+                    <img src="img/Logo.png" alt="" class="img-fluid ms-5" id="logo1">
                 </div>
                 <ul class="nav-links fs-3">
                     <li><a href="" class="fw-bold text-decoration-underline links" id="inicio">Início</a></li>
                     <li><a href="contato.php" class="botoes links" id="contato1">Contato</a></li>
                     <li><a href="login.php" class="botoes links" id="entre">Entre</a></li>
+                    <div class="theme-switch-wrapper">
+                    <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
+                    <label class="theme-switch" for="checkbox">
+                        <input type="checkbox" id="checkbox" />
+                        <div class="slider round"></div>
+                    </label>
+                    </div>  
                 </ul>
                 <div class="menu-toggle bg-" id="mobile-menu">
                     <span class="bar"></span>
@@ -467,9 +476,21 @@
                 <h1 class="text-center m-4">A Nossa História</h1>   
                 <p class="text-center container" id="nossoprojeto">A principal motivação inicial por trás do nosso projeto de TCC para a Escola Técnica Estadual Lauro Gomes foi o aprimoramento de qualidade dos atendimentos médicos no Brasil, especialmente em hospitais públicos.</p>
             </section>  
-            <section id="prints" class="text-center container">
-                <img src="img/hospital.jpg" class="img-fluid rounded img-thumbnail shadow" alt="Imagem de um hospital genérico" height="300px" width="300px">
-                <img src="img/etec-sao-bernardo.jpg" class="img-fluid rounded img-thumbnail shadow" alt="Imagem da entrada da escola técnica estadual lauro gomes" height="300px" width="500px">
+            <section id="fotos" class="text-center container">
+                <!-- <img src="img/hospital.jpg" class="img-fluid rounded img-thumbnail shadow" alt="Imagem de um hospital genérico" height="300px" width="300px"> -->
+                  <div class="card" style="width: 25rem;">
+                  <img class="card-img-top img-fluid rounded img-thumbnail" src="img/Hospital.png" alt="Card image cap">
+                  <div class="card-body">
+                    <!-- <p class="card-text fw-bold">Tela do paciente.</p> -->
+                  </div>
+                </div>
+                <!-- <img src="img/etec-sao-bernardo.jpg" class="img-fluid rounded img-thumbnail shadow" alt="Imagem da entrada da escola técnica estadual lauro gomes" height="300px" width="500px"> -->
+                  <div class="card" style="width: 25rem;">
+                  <img class="card-img-top img-fluid rounded img-thumbnail" src="img/etec-sao-bernardo.jpg" alt="Card image cap">
+                  <div class="card-body">
+                    <!-- <p class="card-text fw-bold">Tela do paciente.</p> -->
+                  </div>
+                </div>
             </section>
             <br><br>
             <div class="text-center">
@@ -489,15 +510,15 @@
                 <div class="carousel-container transparente" id="carousel-ods">
                     <div class="carousel-slide transparente">
                         <div class="custom-carousel-item transparente">
-                            <img src="img/ods3.png" alt="ODS 3 - Saúde e Bem-Estar" class="rounded shadow img-fluid rounded img-thumbnail transparente">
+                            <img src="img/ods3.png" alt="ODS 3 - Saúde e Bem-Estar" class="rounded shadow img-fluid img-thumbnail transparente">
                             <div class="caption">ODS 3: Saúde e Bem-Estar</div>
                         </div>     
                         <div class="custom-carousel-item">
-                            <img src="img/ods9.png" alt="ODS 9 - Indústria, Inovação e Infraestrutura" class="rounded shadow img-fluid rounded img-thumbnail transparente">
+                            <img src="img/ods9.png" alt="ODS 9 - Indústria, Inovação e Infraestrutura" class="rounded shadow img-fluid img-thumbnail transparente">
                             <div class="caption">ODS 9: Indústria, Inovação e Infraestrutura</div>
                         </div>
                         <div class="custom-carousel-item">
-                            <img src="img/ods10.png" alt="ODS 10 - Redução das Desigualdades" class="rounded shadow img-fluid rounded img-thumbnail transparente">
+                            <img src="img/ods10.png" alt="ODS 10 - Redução das Desigualdades" class="rounded shadow img-fluid img-thumbnail transparente">
                             <div class="caption">ODS 10: Redução das Desigualdades</div>
                         </div>
                     </div>
@@ -564,13 +585,13 @@
                     class="text-center">
                 </model-viewer>
             </section><br>
-            <div class="text-center">
+            <!-- <div class="text-center">
                 <i class="fa-solid fa-volume-high fs-3 icone-audio" style="cursor: pointer;" onclick="alternarAudio(this)"></i>
                 <audio>
                     <source src="audio/3D.mp3" type="audio/mp3" />
                     Seu navegador não suporta áudio.
                 </audio>
-            </div>
+            </div> -->
             <br>
             <h4 class="text-center fw-bold">Modelo 3D gerado na ferramenta "MESHY AI".</h4>
             <section class="faq-container" id="FAQ">
@@ -639,15 +660,15 @@
             <div class="text-center container">
                 <h3 class="text-center container" id="copy">&copy HealthSense Systems</h3>
                 <section id="redes" class="text-center container">
-                    <a href="https://x.com/?lang=pt" target="_blank">    
+                    <!-- <a href="https://x.com/?lang=pt" target="_blank">    
                         <img src="img/X.png" class="img-fluid shadow" alt="imagem do X" height="60px" width="70px" id="x">
-                    </a>
-                    <a href="https://www.instagram.com/" target="_blank">
+                    </a> -->
+                    <a href="https://www.instagram.com/projeto_healthsense?utm_source=qr&igsh=bmk0cno3cTBmbTly" target="_blank">
                         <img src="img/Instagram.png" class="img-fluid shadow" alt="imagem do instagram" height="40px" width="70px" id="instagram">
                     </a>
-                    <a href="https://www.facebook.com/?locale=pt_BR" target="_blank">
+                    <!-- <a href="https://www.facebook.com/?locale=pt_BR" target="_blank">
                         <img src="img/Facebook.png" class="img-fluid shadow" alt="imagem do facebook" height="40px" width="70px" id="facebook">
-                    </a>
+                    </a> -->
                 </section>
             </div>
         </footer>
