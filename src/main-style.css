@@ -47,33 +47,27 @@ header {
     justify-content: space-between;
     align-items: center;
     color: white;
-    min-height: 10px;
-    max-height: 150px;
-    padding: 10px 30px;
+    min-height: 80px;
+    padding: 10px 25px;
     width: 100%;
 }
 
 #logo1 {
-    /* max-width: 220px; */
-    width: 300px;
+    max-width: 180px;
     height: auto;
-    top: -20px;
     object-fit: contain;
-    position: relative;
-    right: 70px;
+    position: static; /* Remove posicionamentos fixos/deslocados */
 }
 
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 25px;
+    gap: 12px;
     align-items: center;
     justify-content: flex-end;
     flex: 1;
     margin: 0;
-    position: relative;
-    /* top: -20px; */
-    font-size: 1.1rem;
+    font-size: 0.95rem;
 }
 
 .nav-links li {
@@ -87,6 +81,7 @@ header {
     color: white;
     transition: 0.3s;
     display: inline-block;
+    white-space: nowrap;
 }
 
 .nav-links a:hover,
@@ -100,16 +95,12 @@ header {
 /* --- MENU MOBILE (BOTÃO HAMBÚRGUER) --- */
 #mobile-menu {
     position: fixed;
-    top: 25px;
-    right: 30px;
+    top: 20px;
+    right: 20px;
     z-index: 1001;
-    padding: 15px;
-    width: 60px;
-    /* height: 130px; */
+    padding: 10px;
     cursor: pointer;
-    /* background-color: var(--vermelho); */
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
 .menu-toggle {
@@ -174,7 +165,7 @@ main {
     color: var(--text-color);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     padding: 40px 20px;
     transition: background-color 0.4s ease, color 0.4s ease;
@@ -199,36 +190,38 @@ main {
 .botoes1 {
     background-color: #518b89;
     border-radius: 10px;
-    padding: 10px;
-    color: black;
+    padding: 8px 12px;
+    color: white;
 }
 
 .botoes2 {
     background-color: #9b0000;
     border-radius: 10px;
     padding: 8px 12px;
+    color: white;
 }
 
 /* --- SWITCH DE TEMA --- */
 #mode-label {
     color: var(--text-color);
     font-weight: bold;
-    font-size: 20px;
+    font-size: 15px;
+    white-space: nowrap;
 }
 
 .theme-switch-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 10px;
+    gap: 8px;
+    padding: 5px;
 }
 
 .theme-switch {
     display: inline-block;
-    height: 34px;
+    height: 30px;
     position: relative;
-    width: 60px;
+    width: 55px;
 }
 
 .theme-switch input { display: none; }
@@ -247,13 +240,13 @@ main {
 
 .slider:before {
     background-color: var(--verdeescuro);
-    bottom: 4px;
+    bottom: 3px;
     content: "";
-    height: 26px;
-    left: 4px;
+    height: 24px;
+    left: 3px;
     position: absolute;
     transition: .4s;
-    width: 26px;
+    width: 24px;
     border-radius: 50%;
 }
 
@@ -262,7 +255,7 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-    transform: translateX(26px);
+    transform: translateX(25px);
 }
 
 /* --- FOOTER --- */
@@ -335,62 +328,55 @@ footer {
     animation: fadeIn 1.5s ease-in-out forwards;
 }
 
-/* --- MEDIA QUERIES --- */
+/* --- MEDIA QUERIES (RESPONSIVIDADE E FIXAÇÃO DE HEADER) --- */
 
-/* Ajuste específico para a faixa de tela problemática (1301px a 1480px) */
-@media (min-width: 1301px) and (max-width: 1480px) {
-    .nav-links {
-        gap: 12px; /* Reduz o espaçamento entre os botões */
-        font-size: 0.95rem; /* Ajusta levemente a fonte */
+@media (max-width: 1400px) {
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
     }
 
-    .botoes1, .botoes2 {
-        white-space: nowrap; /* Impede a quebra de linha do texto nos botões */
-        padding: 8px 10px;
+    /* Evita que os elementos subam para trás do header fixo */
+    main {
+        padding-top: 130px !important; 
     }
 
-    #logo1 {
-        max-width: 180px; /* Reduz um pouco o tamanho do logo nessa faixa específica */
-    }
-
-    #mode-label {
-        font-size: 16px; /* Reduz o texto do seletor de tema */
-    }
-}
-
-@media (max-width: 1300px) {
     .menu-toggle {
         display: flex;
         align-items: center;
         justify-content: center;
     }
 
-    #mobile-menu {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-    }
-
+    /* Transparente e oculto enquanto fechado */
     .nav-links {
         position: fixed;
         top: 0;
         left: -100%;
         height: 100vh;
         width: 80%;
-        max-width: 340px;
+        max-width: 320px;
         background-color: var(--verde);
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 30px;
-        font-size: 1.3rem;
-        transition: 0.4s ease;
+        gap: 25px;
+        font-size: 1.1rem;
         z-index: 1000;
         margin: 0;
+        padding: 20px;
+        opacity: 0;                     /* Transparente quando fechado */
+        visibility: hidden;           /* Esconde para evitar cliques acidentais */
+        transition: left 0.4s ease, opacity 0.4s ease, visibility 0.4s ease;
     }
 
+    /* Opacidade total quando a classe active é ativada */
     .nav-links.active {
         left: 0;
+        opacity: 1;                    /* Opacidade total ao abrir */
+        visibility: visible;
     }
 
     #logo {
@@ -399,28 +385,15 @@ footer {
 }
 
 @media (max-width: 500px) {
+    main {
+        padding-top: 140px !important; /* Margem adicional para telas pequenas de smartphones */
+    }
+
     #logo {
-        max-width: 280px;
+        max-width: 250px;
     }
 
     #logo1 {
-        /* max-width: 160px; */
-    }
-}
-
-@media (min-width: 1925px) {
-    .botoes1 {
-        white-space: nowrap;
-    }
-}
-@media(max-width: 385px)
-{
-    #logo1
-    {
-        transform: scale();
-    }
-    .navbar
-    {
-        max-height: 160px;
+        max-width: 140px;
     }
 }

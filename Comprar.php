@@ -258,7 +258,7 @@ try {
                 <div class="logo fs-3">
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
-                <ul class="nav-links fs-3">
+                <ul class="nav-links ">
                     <li><a href="inicial.php" class="botoes1 ">Início</a></li>
                     <li><a href="inicio.php" class="botoes1">Seus Dados</a></li>
                     <li><a href="Comprar.php" class="fw-bold text-decoration-underline botoes1">Comprar Pulseira</a></li>
@@ -280,7 +280,7 @@ try {
                 </div>
             </nav>   
         </header>
-        <main class="flex flex-col min-h-screen vw-100 p-0">
+        <main class="flex flex-col min-h-screen vw-100 ">
             <h1 class="fw-bold text-center">Bem vindo, <?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?>!</h1>
             <h2 class="text-center">Aqui você pode adquirir o produto da Health Sense Services.</h2>
             

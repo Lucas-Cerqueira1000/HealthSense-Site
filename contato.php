@@ -216,7 +216,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 <div class="logo fs-3">
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
-                <ul class="nav-links fs-3">
+                <ul class="nav-links ">
                     <li><a href="index.html" id="inicio">Início</a></li>
                     <li><a href="contato.php" class="botoes fw-bold text-decoration-underline" id="contato1">Contato</a></li>
                     <li><a href="login.php" class=" botoes" id="entre" >Entre</a></li>
@@ -236,11 +236,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             </nav>  
         </header>
 
-        <main class="flex flex-col min-h-screen w-full p-0">
+        <main class="flex flex-col min-h-screen w-full">
         <br><br>
         <section id="principal">
             <section id="projeto">
-                <br><br><br><br><br>
                 <h1 class="text-center m-4">Formas de contatar-nos:</h1>   
                 <p class="text-center container" id="nossoprojeto">Telefone: (11)4125-2288 <br> E-mail: healthsense@gmail.com <br> Endereço: Avenida Pereira Barreto - Baeta Neves - São Bernardo do Campo - CEP: 09751-000</p>
             </section>

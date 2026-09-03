@@ -248,7 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 <div class="logo fs-3">
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
-                <ul class="nav-links fs-3 text-center" id="links">
+                <ul class="nav-links text-center" id="links">
                     <li><a href="inicial.php" class="botoes1 ">Início</a></li>
                     <li><a href="inicio.php" class="botoes1">Seus Dados</a></li>
                     <li><a href="Comprar.php" class="botoes1">Comprar Pulseira</a></li>
@@ -270,8 +270,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             </nav>  
         </header>
 
-        <main class="flex flex-col min-h-screen w-full p-0">
-            <br>
+        <main class="flex flex-col min-h-screen w-full">
             <section id="principal">
             <section id="projeto">
                 <br>
@@ -318,7 +317,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
                     <div class="text-center">
                         <button type="submit" id="btnEnviar" name="btnEnviar" class="btn btn-success">
-                            <span class="texto-botao">Cadastrar</span>
+                            <span class="texto-botao">Enviar</span>
                             <span class="spinner"></span>
                         </button>
                         <button type="reset" class="btn btn-danger">Limpar Mensagem</button>

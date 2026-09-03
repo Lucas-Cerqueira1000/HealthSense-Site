@@ -7,59 +7,63 @@ $dbname = 'tcc_bd35';
 $username = 'tcc_bd35';
 $password = "ROSA123456a#";
 
-try
-{
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch (PDOException $e) 
-{
-    die("Erro na conexão com o banco: " . $e->getMessage());
-}
-
 $erroLogin = null;
+$pdo = null;
 
-// Verifica se os campos foram enviados via POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') 
-{
+// Tenta conectar com o banco de dados com limite de tempo (timeout) de 5 segundos
+try {
+    $options = [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_TIMEOUT => 5 // Define timeout para falhar rapidamente se a internet cair
+    ];
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password, $options);
+} catch (PDOException $e) {
+    // Em vez de encerrar a página com die(), salva o erro para exibir dentro do card no HTML
+    $erroLogin = "Não foi possível conectar ao banco de dados. Verifique sua conexão com a internet ou tente novamente em instantes.";
+}
+
+// Verifica se os campos foram enviados via POST e se a conexão com o banco funcionou
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && $pdo) {
     // O trim remove espaços acidentais antes ou depois do texto digitado
     $usuario = trim($_POST['email']);
     $senha = trim($_POST['senha']); 
 
-    // 1º PASSO: Tenta buscar na tabela de Hospitais
-    $stmt = $pdo->prepare("SELECT ID, nome, email, senha, 'hospital' AS tipo FROM tabHospitais WHERE email = :usuario");
-    $stmt->bindParam(':usuario', $usuario);
-    $stmt->execute();
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // 2º PASSO: Se não achou nos hospitais, busca na tabela de Pacientes
-    if (!$user) {
-        $stmt = $pdo->prepare("SELECT ID, nome, email, senha, 'paciente' AS tipo FROM tabPacientes WHERE email = :usuario");
+    try {
+        // 1º PASSO: Tenta buscar na tabela de Hospitais
+        $stmt = $pdo->prepare("SELECT ID, nome, email, senha, 'hospital' AS tipo FROM tabHospitais WHERE email = :usuario");
         $stmt->bindParam(':usuario', $usuario);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-    }
 
-    // 3º PASSO: Valida o usuário encontrado
-    if ($user) {
-        // Valida se a senha bate por password_verify OU por igualdade direta (para aceitar os IDs de 2 a 7 em texto limpo)
-        if (password_verify($senha, $user['senha']) || $senha === $user['senha']) {
-            
-            // Autenticação bem-sucedida, cria as variáveis de sessão
-            $_SESSION['usuario_id']   = $user['ID'];
-            $_SESSION['usuario_nome'] = $user['nome'];
-            $_SESSION['usuario_tipo'] = $user['tipo'];
-
-            // Redireciona para a página correspondente
-            header("Location: inicial.php");
-            exit();
-        } 
-        else 
-        {
-            $erroLogin = "Senha ou e-mail incorretos.";
+        // 2º PASSO: Se não achou nos hospitais, busca na tabela de Pacientes
+        if (!$user) {
+            $stmt = $pdo->prepare("SELECT ID, nome, email, senha, 'paciente' AS tipo FROM tabPacientes WHERE email = :usuario");
+            $stmt->bindParam(':usuario', $usuario);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
         }
-    // } else {
-    //     $erroLogin = "E-mail não cadastrado.";
+
+        // 3º PASSO: Valida o usuário encontrado
+        if ($user) {
+            // Valida se a senha bate por password_verify OU por igualdade direta
+            if (password_verify($senha, $user['senha']) || $senha === $user['senha']) {
+                
+                // Autenticação bem-sucedida, cria as variáveis de sessão
+                $_SESSION['usuario_id']   = $user['ID'];
+                $_SESSION['usuario_nome'] = $user['nome'];
+                $_SESSION['usuario_tipo'] = $user['tipo'];
+
+                // Redireciona para a página correspondente
+                header("Location: inicial.php");
+                exit();
+            } else {
+                $erroLogin = "Senha ou e-mail incorretos.";
+            }
+        } else {
+            $erroLogin = "E-mail ou senha incorretos.";
+        }
+    } catch (PDOException $e) {
+        $erroLogin = "Erro na busca dos dados. Verifique sua conexão e tente novamente.";
     }
 }
 ?>
@@ -93,20 +97,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             main 
             {
                 font-size: large;
-                /* background: url(img/gif.gif); */
-                
             }
             #imagem 
             {
                 position: relative;
-                /* height: 40px; */
-                background-size: cover;          /* Faz a imagem cobrir toda a área */
-                background-position: center;     /* Centraliza a imagem na tela */
-                background-repeat: no-repeat;    /* Evita que a imagem se repita */
-                background-attachment: fixed;    /* Mantém a imagem fixa ao rolar a página */
-                height: 100vh;                   /* Ocupa 100% da altura da tela */
-                margin: 0;                       /* Remove a margem padrão do navegador */
-                padding: 0;                      /* Remove o padding padrão do navegador */
+                background-size: cover;          
+                background-position: center;     
+                background-repeat: no-repeat;    
+                background-attachment: fixed;    
+                height: 100vh;                   
+                margin: 0;                       
+                padding: 0;                      
             }
             #for {
                 background-color: var(--verde);
@@ -163,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 outline: none;
                 transition: border-color 0.3s, box-shadow 0.3s;
                 background-color: transparent;
-                color: white; /* Garante que o texto digitado fique visível no fundo escuro */
+                color: white; 
             }
 
             /* Efeito ao clicar no input (Bordas azuis) */
@@ -180,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                 transform: translateY(-50%);
                 color: #80868b;
                 font-size: 16px;
-                background-color: var(--verde, #ffffff); /* Adapta ao fundo do card */
+                background-color: var(--verde, #ffffff); 
                 padding: 0 5px;
                 pointer-events: none;
                 transition: all 0.2s ease-out;
@@ -242,9 +243,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
                                 <h5 class="card-title text-center" id="titulo">Login</h5>
                                 <hr>
                                 
-                                <?php if(isset($erroLogin)): ?>
+                                <?php if(!empty($erroLogin)): ?>
                                     <div class="alert alert-danger p-2 text-center" style="font-size: 14px;">
-                                        <?php echo $erroLogin; ?>
+                                        <?php echo htmlspecialchars($erroLogin); ?>
                                     </div>
                                 <?php endif; ?>
                                 
@@ -308,15 +309,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         const formlogin = document.getElementById("formlogin");
         const botaosalvar = document.getElementById("btnEntrar");
             
-        formlogin.addEventListener("submit", function(e) {
-            // 1. Ativa a classe de carregamento visual
+        formlogin.addEventListener("submit", function() {
+            // Apenas adiciona a classe visual de carregamento para não travar a requisição POST
             botaosalvar.classList.add("ativo");
-            
-            // 2. Para não travar o envio do formulário, usamos o setTimeout 
-            // para desabilitar o botão um milissegundo depois do clique
-            setTimeout(function() {
-                botaosalvar.disabled = true;
-            }, 10);
+            botaosalvar.style.pointerEvents = "none"; // Impede cliques duplos sem desabilitar o envio do formulário
         });
         </script>
     </body>

@@ -138,7 +138,7 @@ button.ativo .spinner {
                 <div class="logo fs-3">
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
-                <ul class="nav-links fs-3 text-center" id="links">
+                <ul class="nav-links text-center" id="links">
                     <li><a href="inicial.php" class="botoes1 ">Início</a></li>
                     <li><a href="inicio.php" class="botoes1 fw-bold text-decoration-underline links">Seus Dados</a></li>
                     <li><a href="Comprar.php" class="botoes1">Comprar Pulseira</a></li>
@@ -163,8 +163,7 @@ button.ativo .spinner {
             </nav>  
         </header>
         
-        <main class="flex flex-col min-h-screen vw-100 p-0">
-            <br>
+        <main class="flex flex-col min-h-screen vw-100 ">
             <h1 class="fw-bold text-center">Bem vindo, <?php echo htmlspecialchars($_SESSION['usuario_nome']); ?>:</h1>
             <br><br>
             
