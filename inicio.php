@@ -148,13 +148,21 @@ button.ativo .spinner {
                     <!-- <li><a href="DeletarMedicos.php" class="botoes1">Deletar Médicos</a></li> -->
                     <!-- <li><a href="AlterarDadosMedicos.php" class="botoes1">Alterar Dados Médicos</a></li> -->
                     <a href="Index.html" class="botoes2">Deslogar</a>
-                    <div class="theme-switch-wrapper">
+                    <!-- <div class="theme-switch-wrapper">
                         <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
                         <label class="theme-switch" for="checkbox">
                             <input type="checkbox" id="checkbox" />
                             <div class="slider round"></div>
                         </label>
-                    </div>
+                    </div> -->
+                                        <div class="theme-switch-wrapper">
+    <span class="theme-icon sun-icon" id="mode-label">☀️</span>
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox">
+        <span class="slider round"></span>
+    </label>
+    <span class="theme-icon moon-icon">🌙</span>
+</div>
                 </ul>
                 <div class="menu-toggle" id="mobile-menu">
                     <span class="bar"></span>

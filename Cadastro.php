@@ -140,15 +140,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             @keyframes girar {
                 to { transform: rotate(360deg); }
             }
-            @media(max-width: 1300px)
-            {
-                 .card
-                {
-                    transform:scale(0.9);
-                    position: relative;
-                    top: 20px;
-                }
-            }
         </style>
     </head>
     <body>
@@ -162,13 +153,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     <li><a href="index.html" id="inicio">Início</a></li>
                     <li><a href="contato.php" class="botoes " id="contato1">Contato</a></li>
                     <li><a href="login.php" class=" botoes fw-bold text-decoration-underline" id="entre" >Entre</a></li>
-                    <div class="theme-switch-wrapper">
+                    <!-- <div class="theme-switch-wrapper">
                         <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
                         <label class="theme-switch" for="checkbox">
                             <input type="checkbox" id="checkbox" />
                             <div class="slider round"></div>
                         </label>
-                    </div>
+                    </div> -->
+                                        <div class="theme-switch-wrapper">
+    <span class="theme-icon sun-icon" id="mode-label">☀️</span>
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox">
+        <span class="slider round"></span>
+    </label>
+    <span class="theme-icon moon-icon">🌙</span>
+</div>
                 </ul>
                 <div class="menu-toggle" id="mobile-menu">
                     <span class="bar"></span>
