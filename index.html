@@ -384,6 +384,7 @@
             }
             .icone-audio:hover {
                 transform: scale(1.15);
+                color: white;
             }
             @media(max-width: 420px)
             {   
@@ -399,6 +400,32 @@
             .transparente
             {
                 background-color: transparent;
+            }
+            .font-controls {
+                display: flex;
+                gap: 8px;
+                margin-bottom: 20px;
+            }
+
+            .font-controls button {
+                background-color: #f0f0f0;
+                border: 1px solid #ccc;
+                padding: 8px 12px;
+                cursor: pointer;
+                border-radius: 4px;
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                font-size: 14px;
+            }
+
+            .font-controls button:hover {
+                background-color: #e0e0e0;
+            }
+            #btn-diminuir, #btn-aumentar
+            {
+                background-color: var(--verde);
+                color: white;
             }
         </style>
     </head>
@@ -440,7 +467,16 @@
                 </div>
             </nav>  
         </header>
-      <main class="flex flex-col min-h-screen vw-100" id="corpo">
+        <main class="flex flex-col min-h-screen vw-100 conteudo" id="corpo">
+          <!-- Botões de Acessibilidade -->
+          <div class="font-controls">
+              <button id="btn-diminuir" onclick="alterarFonte(-2)" title="Diminuir texto">
+                  <i class="fa-solid fa-a"></i><i class="fa-solid fa-minus"></i>
+              </button>
+              <button id="btn-aumentar" onclick="alterarFonte(2)" title="Aumentar texto">
+                  <i class="fa-solid fa-a"></i><i class="fa-solid fa-plus"></i>
+              </button>
+          </div>
             <img src="img/teste7.png" class="img-fluid rounded mx-auto d-block" alt="logo do health sense" height="400px" width="400px" id="logo">
             <br>
             <section id="nosso_projeto">
@@ -476,18 +512,14 @@
                 <p class="text-center container" id="nossoprojeto">A principal motivação inicial por trás do nosso projeto de TCC para a Escola Técnica Estadual Lauro Gomes foi o aprimoramento de qualidade dos atendimentos médicos no Brasil, especialmente em hospitais públicos.</p>
             </section>  
             <section id="fotos" class="text-center container">
-                <!-- <img src="img/hospital.jpg" class="img-fluid rounded img-thumbnail shadow" alt="Imagem de um hospital genérico" height="300px" width="300px"> -->
                   <div class="card" style="width: 25rem;">
                   <img class="card-img-top img-fluid rounded img-thumbnail" src="img/Hospital.png" alt="Card image cap">
                   <div class="card-body">
-                    <!-- <p class="card-text fw-bold">Tela do paciente.</p> -->
                   </div>
                 </div>
-                <!-- <img src="img/etec-sao-bernardo.jpg" class="img-fluid rounded img-thumbnail shadow" alt="Imagem da entrada da escola técnica estadual lauro gomes" height="300px" width="500px"> -->
                   <div class="card" style="width: 25rem;">
                   <img class="card-img-top img-fluid rounded img-thumbnail" src="img/etec-sao-bernardo.jpg" alt="Card image cap">
                   <div class="card-body">
-                    <!-- <p class="card-text fw-bold">Tela do paciente.</p> -->
                   </div>
                 </div>
             </section>
@@ -584,13 +616,6 @@
                     class="text-center">
                 </model-viewer>
             </section><br>  
-            <!-- <div class="text-center">
-                <i class="fa-solid fa-volume-high fs-3 icone-audio" style="cursor: pointer;" onclick="alternarAudio(this)"></i>
-                <audio>
-                    <source src="audio/3D.mp3" type="audio/mp3" />
-                    Seu navegador não suporta áudio.
-                </audio>
-            </div> -->
             <br>
             <h4 class="text-center fw-bold">Modelo 3D gerado na ferramenta "MESHY AI".</h4>
             <section class="faq-container" id="FAQ">
@@ -659,22 +684,16 @@
             <div class="text-center container">
                 <h3 class="text-center container" id="copy">&copy HealthSense Systems</h3>
                 <section id="redes" class="text-center container">
-                    <!-- <a href="https://x.com/?lang=pt" target="_blank">    
-                        <img src="img/X.png" class="img-fluid shadow" alt="imagem do X" height="60px" width="70px" id="x">
-                    </a> -->
                     <a href="https://www.instagram.com/projeto_healthsense?utm_source=qr&igsh=bmk0cno3cTBmbTly" target="_blank">
-                        <!-- <img src="img/Instagram.png" clas="img-fluid shadow" alt="imagem do instagram" height="40px" width="70px" id="instagram"> -->
                          <i class="fa-brands fa-instagram display-3"></i>
                     </a>
-                    <!-- <a href="https://www.facebook.com/?locale=pt_BR" target="_blank">
-                        <img src="img/Facebook.png" class="img-fluid shadow" alt="imagem do facebook" height="40px" width="70px" id="facebook">
-                    </a> -->
                 </section>
             </div>
         </footer>
         <script src="js/main-script.js"></script>
         <script src="js/scripts.js"></script>
         <script src="js/audio.js"></script>
+        <script src="js/header.js"></script>
         
         <script>
             document.querySelectorAll('.faq-item').forEach(details => {
@@ -823,7 +842,6 @@
                 startTimer();
             }
 
-            // Inicializar ambos os carrosséis de forma independente
             document.addEventListener("DOMContentLoaded", function () {
                 inicializarCarrossel("carousel-ods");
                 inicializarCarrossel("carousel-equipe");
@@ -875,6 +893,33 @@
                     icone.classList.add('fa-volume-high');
                 };
             }
+        </script>
+        <script>
+            function alterarFonte(valor) {
+                const elementosTexto = document.querySelectorAll('.conteudo, .conteudo p, .conteudo h1, .conteudo h2, .conteudo h3, .conteudo h4, .conteudo summary, .conteudo .card-text');
+
+                elementosTexto.forEach(elemento => {
+                    let tamanhoAtual = parseFloat(window.getComputedStyle(elemento).fontSize);
+                    let novoTamanho = tamanhoAtual + valor;
+                    
+                    novoTamanho = Math.max(12, Math.min(novoTamanho, 36));
+                    
+                    elemento.style.fontSize = novoTamanho + 'px';
+                });
+            }
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+    const mobileMenu = document.getElementById("mobile-menu");
+    const navLinks = document.querySelector(".nav-links");
+
+    if (mobileMenu && navLinks) {
+        mobileMenu.addEventListener("click", function () {
+            mobileMenu.classList.toggle("active");
+            navLinks.classList.toggle("active");
+        });
+    }
+});
         </script>
     </body>
 </html>

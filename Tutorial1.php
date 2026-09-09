@@ -1,39 +1,39 @@
 <?php 
-session_start();
+// session_start();
 
-if(!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
-    exit;
-}
+// if(!isset($_SESSION['usuario_id'])) {
+//     header("Location: login.php");
+//     exit;
+// }
 
-// Configurações do Banco de Dados
-$host = 'tcc_bd35.mysql.dbaas.com.br';
-$dbname = 'tcc_bd35';
-$username = 'tcc_bd35';
-$password = 'ROSA123456a#';
+// // Configurações do Banco de Dados
+// $host = 'tcc_bd35.mysql.dbaas.com.br';
+// $dbname = 'tcc_bd35';
+// $username = 'tcc_bd35';
+// $password = 'ROSA123456a#';
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// try {
+//     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+//     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Busca as informações atualizadas do hospital logado
-    $stmt = $pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
-    $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
-    $stmt->execute();
-    $dadosHospital = $stmt->fetch(PDO::FETCH_ASSOC);
+//     // Busca as informações atualizadas do hospital logado
+//     $stmt = $pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
+//     $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
+//     $stmt->execute();
+//     $dadosHospital = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    if (!$dadosHospital) {
-        echo "Dados do hospital não encontrados.";
-        exit;
-    }
+//     if (!$dadosHospital) {
+//         echo "Dados do hospital não encontrados.";
+//         exit;
+//     }
     
-    // Força a atualização do nome da sessão com o dado real vindo do banco
-    $_SESSION['usuario_nome'] = $dadosHospital['nome'];
+//     // Força a atualização do nome da sessão com o dado real vindo do banco
+//     $_SESSION['usuario_nome'] = $dadosHospital['nome'];
 
-} catch (PDOException $e) {
-    echo "Erro na conexão: " . $e->getMessage();
-    exit;
-}
+// } catch (PDOException $e) {
+//     echo "Erro na conexão: " . $e->getMessage();
+//     exit;
+// }
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -248,6 +248,38 @@ try {
             opacity: 0;
             pointer-events: none; 
         }
+        .botao-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.2s;
+        }
+
+        .botao-voltar:hover {
+            background-color: #0056b3;
+        }
+             .btn-imprimir {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px; /* Espaço entre o ícone e o texto */
+        }
+
+        .btn-imprimir:hover {
+            background-color: #0056b3;
+        }
     </style>
     <body>
         <header>
@@ -259,16 +291,15 @@ try {
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
                 <ul class="nav-links ">
-                    <li><a href="inicial.php" class="botoes1 fw-bold text-decoration-underline ">Início</a></li>
+                    <li><a href="inicial.php" class="botoes1 ">Início</a></li>
                     <li><a href="inicio.php" class="botoes1">Seus Dados</a></li>
-                    <li><a href="Comprar.php" class="botoes1">Comprar Pulseira</a></li>
-                    <li><a href="Tutorial.php" class="botoes1">Tutorial</a></li>
+                    <li><a href="Comprar.php" class=" botoes1">Comprar Pulseira</a></li>
+                    <li><a href="Tutorial.php" class="botoes1 fw-bold text-decoration-underline">Tutorial</a></li>
                     <li><a href="Suporte.php" class="botoes1">Suporte Técnico</a></li>
                     <a href="Index.html" class="botoes2">Deslogar</a>
                     <div class="theme-switch-wrapper">
                         <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
                         <label class="theme-switch" for="checkbox">
-                            <!-- <i class="fa-solid fa-circle-half-stroke display-7" aria-hidden="true"></i> -->
                             <input type="checkbox" id="checkbox" />
                             <div class="slider round"></div>
                         </label>
@@ -283,66 +314,27 @@ try {
             </nav>   
         </header>
         <main class="flex flex-col min-h-screen vw-100 ">
-            <h1 class="fw-bold text-center">Bem vindo, <?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?>!</h1>
-            
+            <!-- <h1 class="fw-bold text-center">Aqui, <?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?> você encontrará os tutoriais de utilização do nosso produto.</h1> -->
+            <!-- <h2 class="text-center">Aqui você pode adquirir o produto da Health Sense Services.</h2> -->
+            <!-- Botão de voltar com ícone -->
+    <a href="javascript:history.back()" class="botao-voltar">
+        <i class="fa-solid fa-arrow-left"></i> Voltar
+    </a>
+        <!-- Botão com ícone de impressora -->
+    <button class="btn-imprimir" onclick="window.print()">
+        <i class="fa-solid fa-print"></i> Imprimir Página
+    </button>
             <section id="principal">
                 <section id="produto">
+                <h1 class="text-center mt-5">Colocar a pulseira no braço do paciente</h1>
                     <br>
-                    <h1 class="text-center">Algumas notícias do projeto HealthSense</h1>
-                     
-                    <!-- <div class="carousel-container">
-                        <div class="carousel-slide">
-                            <div class="custom-carousel-item">
-                                <img src="img/albert.jpg" alt="Imagem da pulseira" class="rounded img-thumbnail shadow">
-                                <div class="caption"><a href="" class="fw-bold" style="color: var(--vermelho);">G1</a></div>
-                            </div>
-                            
-                            <div class="custom-carousel-item">
-                                <img src="img/sao-paulo.jpg" alt="Imagem da pulseira no braço do paciente" class="rounded img-thumbnail shadow">
-                                <div class="caption"><a href="" class="fw-bold" style="color: var(--vermelho);">Estadão</a></div>
-                            </div>
-
-                            <div class="custom-carousel-item">
-                                <img src="img/3.png" alt="Imagem da pulseira no braço do paciente e visualização do aplicativo com eletrocardiograma" class="rounded img-thumbnail shadow">
-                                <div class="caption"><a href="" class="fw-bold" style="color: var(--vermelho);">Estado de São Paulo</a></div>
-                            </div>
-                        </div>
-
-                        <button class="prev" onclick="prevSlide()">&#10094;</button>
-                        <button class="next" onclick="nextSlide()">&#10095;</button>
-                    </div> -->
-                </section>
-                <br>
-    <div class="container my-4">
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <div class="card h-100 bg-warning">
-        <div class="card-body">
-          <h5 class="card-title text-center"><a href=""> G1</a></h5>
-          <p class="card-text">Matéria do G1 sobre o interesse do Hospital Israelita Albert Einstein no projeto.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <div class="card h-100 bg-secondary">
-        <div class="card-body">
-          <h5 class="card-title text-center"><a href=""> Estadão</a></h5>
-          <p class="card-text">Matéria do Estadão sobre teste da pulseira em projetos sociais no centro de São Paulo.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <div class="card h-100 bg-success">
-        <div class="card-body">
-          <h5 class="card-title text-center"><a href=""> Folha de São Paulo</a></h5>
-          <p class="card-text">Matéria do jornal Folha de São Paulo sobre os resultados da utilização do equipamento no Hospital São Paulo.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-           
+                    <h3>1-)Preparação</h3>
+                    <ul class="list-disc list-inside text-white ms-4 my-3">
+                        <li>Higienize as mãos conforme o protocolo da instituição.</li>
+                        <li>Verifique se a pulseira está limpa e sem danos aparentes.</li>
+                        <li>Confirme a identificação do paciente antes da colocação.</li>
+                        <li>Explique ao paciente a finalidade da pulseira.</li>
+                    </ul>
             </section>   
             <div class="my-5 py-3"></div>
         </main>

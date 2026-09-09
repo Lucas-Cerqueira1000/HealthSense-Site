@@ -204,19 +204,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $pdo) {
                 color: white;
                 font-weight: bold;
             }
+            @media(max-width: 1300px)
+            {
+                #formLogin, .card
+                {
+                    transform:scale(0.8);
+                    position: relative;
+                    top: 20px;
+                }
+            }
         </style>
     </head>
     <body>
-        <header>
+ <header>
             <nav class="navbar">
                 <div class="overlay"></div>
                 <div class="logo fs-3">
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
-                <ul class="nav-links fs-3">
+                <ul class="nav-links ">
                     <li><a href="index.html" id="inicio">Início</a></li>
-                    <li><a href="contato.php" class="botoes" id="contato1">Contato</a></li>
-                    <li><a href="login.php" class="fw-bold text-decoration-underline botoes" id="entre">Entre</a></li>
+                    <li><a href="contato.php" class="botoes " id="contato1">Contato</a></li>
+                    <li><a href="login.php" class=" botoes fw-bold text-decoration-underline" id="entre" >Entre</a></li>
                     <div class="theme-switch-wrapper">
                         <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
                         <label class="theme-switch" for="checkbox">
@@ -231,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $pdo) {
                     <span class="bar"></span>
                 </div>
             </nav>  
-        </header>
+</header>
 
         <main class="flex-grow-1 d-flex align-items-center justify-content-center py-5">
             <div class="container">

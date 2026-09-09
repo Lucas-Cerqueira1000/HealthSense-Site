@@ -1,30 +1,28 @@
 <?php
 include ('Conexao.php');
 
-// Variável para armazenar o estado do SweetAlert
 $alert_script = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') 
 {
-    // Limpeza padrão para campos normais contra SQL Injection
     $nome = mysqli_real_escape_string($con, $_POST['nome']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $assunto = mysqli_real_escape_string($con, $_POST['assunto']);
     $mensagem = mysqli_real_escape_string($con, $_POST['mensagem']);          
 
-    // Array preparado para armazenar até 4 caminhos de imagem
     $caminhos = [NULL, NULL, NULL, NULL];
+    $erros_upload = [];
 
-    // Processamento das Múltiplas Imagens (Máximo 4)
     if (isset($_FILES['fotos']) && !empty($_FILES['fotos']['name'][0])) {
-        $diretorio_destino = "uploads/";
+        // Usa o caminho absoluto no servidor para evitar erros de diretório
+        $diretorio_pasta = __DIR__ . "/uploads/";
+        $diretorio_relativo = "uploads/";
 
-        // Cria o diretório caso ele não exista
-        if (!is_dir($diretorio_destino)) {
-            mkdir($diretorio_destino, 0755, true);
+        // Tenta criar a pasta se não existir
+        if (!is_dir($diretorio_pasta)) {
+            @mkdir($diretorio_pasta, 0755, true);
         }
 
-        // Garante que processaremos no máximo 4 arquivos
         $total_arquivos = min(count($_FILES['fotos']['name']), 4);
 
         for ($i = 0; $i < $total_arquivos; $i++) {
@@ -33,26 +31,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             $erro = $_FILES['fotos']['error'][$i];
 
             if ($erro === UPLOAD_ERR_OK) {
-                // Gera um nome exclusivo para cada imagem enviada
                 $extensao = pathinfo($nome_original, PATHINFO_EXTENSION);
                 $novo_nome = uniqid("img_", true) . '.' . strtolower($extensao);
-                $caminho_final = $diretorio_destino . $novo_nome;
+                
+                $caminho_absoluto_final = $diretorio_pasta . $novo_nome;
+                $caminho_banco = $diretorio_relativo . $novo_nome;
 
-                // Move o arquivo da pasta temporária para o destino final
-                if (move_uploaded_file($nome_tmp, $caminho_final)) {
-                    $caminhos[$i] = "'" . mysqli_real_escape_string($con, $caminho_final) . "'";
+                if (move_uploaded_file($nome_tmp, $caminho_absoluto_final)) {
+                    $caminhos[$i] = $caminho_banco;
+                } else {
+                    $erros_upload[] = "Falha ao mover a imagem {$nome_original}. Verifique as permissões da pasta uploads.";
                 }
+            } else if ($erro !== UPLOAD_ERR_NO_FILE) {
+                // Captura códigos de erro nativos do PHP
+                $erros_upload[] = "Erro no upload da imagem {$nome_original} (Código do erro PHP: {$erro}).";
             }
         }
     }
 
-    // Tratamento dos valores para a query SQL (coloca NULL caso a imagem não tenha sido enviada)
-    $img1 = $caminhos[0] ?? "NULL";
-    $img2 = $caminhos[1] ?? "NULL";
-    $img3 = $caminhos[2] ?? "NULL";
-    $img4 = $caminhos[3] ?? "NULL";
+    $img1 = !empty($caminhos[0]) ? "'" . mysqli_real_escape_string($con, $caminhos[0]) . "'" : "NULL";
+    $img2 = !empty($caminhos[1]) ? "'" . mysqli_real_escape_string($con, $caminhos[1]) . "'" : "NULL";
+    $img3 = !empty($caminhos[2]) ? "'" . mysqli_real_escape_string($con, $caminhos[2]) . "'" : "NULL";
+    $img4 = !empty($caminhos[3]) ? "'" . mysqli_real_escape_string($con, $caminhos[3]) . "'" : "NULL";
 
-    // Inserção dos dados do chamado juntamente com as 4 colunas de imagem
     $query = "INSERT INTO tabSuporte (nome, email, assunto, mensagem, imagem1, imagem2, imagem3, imagem4) 
               VALUES ('$nome', '$email', '$assunto', '$mensagem', $img1, $img2, $img3, $img4)";
 
@@ -60,22 +61,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
 
     if($result) 
     {
+        $mensagem_alerta = "Mensagem enviada com sucesso!";
+        if (!empty($erros_upload)) {
+            $mensagem_alerta .= "<br><br><small class=\"text-warning\">Avisos sobre as imagens:<br>" . implode("<br>", $erros_upload) . "</small>";
+        }
+
         $alert_script = "
         <script> 
         Swal.fire({
             title: 'Sucesso!',
-            text: 'Mensagem enviada com sucesso!',
+            html: '{$mensagem_alerta}',
             icon: 'success',
         });
         </script>";
     }       
     else 
     {
+        $erro_db = addslashes(mysqli_error($con));
         $alert_script = "
         <script> 
         Swal.fire({
             title: 'Erro',
-            html: 'Não foi possível salvar a mensagem no banco.',
+            html: 'Não foi possível salvar no banco.<br><small class=\"text-danger\">{$erro_db}</small>',
             icon: 'error'
         });
         </script>";
@@ -88,30 +95,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         <title>Suporte Técnico</title>
         <meta charset="utf-8"/>
         <link rel="icon" href="img/logo1.png">
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <link rel="stylesheet" href="../bootstrap-5.3.8-dist/css/bootstrap.css">
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
-        />
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
- 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
-        ></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="src/main-style.css">
         <style>
         #nossoprojeto {
@@ -143,50 +133,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 top: 0;
             }
         }
-        #nome {
+        #nome, #email, #assunto, #mensagem {
             background-color: var(--verdeescuro);
             width: 100%;
             max-width: 600px;
-            height: 100px;
             resize: none;
             border-radius: 5px;
             font-size: 20px;
             color: white;
         }
-        #email {
-            background-color: var(--verdeescuro);
-            width: 100%;
-            max-width: 600px;
-            height: 130px;
-            resize: none;
-            border-radius: 5px;
-            font-size: 20px;
-            color: white;
-        }
+        #nome, #assunto { height: 100px; }
+        #email { height: 130px; }
+        #mensagem { height: 370px; }
         #principal {
             background-color:var(--verde);
             color: white;
             border-radius: 70px;
-        }
-        #assunto {
-            background-color: var(--verdeescuro);
-            width: 100%;
-            max-width: 600px;
-            height: 100px;
-            resize: none;
-            border-radius: 5px;
-            font-size: 20px;
-            color: white;
-        }
-        #mensagem {
-            background-color: var(--verdeescuro);
-            width: 100%;
-            max-width: 600px;
-            height: 370px;
-            resize: none;
-            border-radius: 5px;
-            font-size: 20px;
-            color: white;
         }
         #contato {
             display: flex;
@@ -204,15 +166,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             font-size:20px;
             font-weight: bold;
         }
-        #mensagem::placeholder,
-        #nome::placeholder,
-        #email::placeholder,
-        #assunto::placeholder {
+        #mensagem::placeholder, #nome::placeholder, #email::placeholder, #assunto::placeholder {
             color: white;
             opacity: 0.7;
         }
 
-        /* Estilos ajustados para o botão e animação do spinner */
         #btnEnviar {
             display: inline-flex;
             align-items: center;
@@ -249,9 +207,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
                 <ul class="nav-links text-center" id="links">
-                    <li><a href="inicial.php" class="botoes1 ">Início</a></li>
+                    <li><a href="inicial.php" class="botoes1">Início</a></li>
                     <li><a href="inicio.php" class="botoes1">Seus Dados</a></li>
                     <li><a href="Comprar.php" class="botoes1">Comprar Pulseira</a></li>
+                    <li><a href="Tutorial.php" class="botoes1">Tutorial</a></li>
                     <li><a href="Suporte.php" class="botoes1 fw-bold text-decoration-underline links">Suporte Técnico</a></li>
                     <a href="Index.html" class="botoes2">Deslogar</a>
                     <div class="theme-switch-wrapper">
@@ -422,13 +381,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             
         if (formCadastro && botaosalvar) {
             formCadastro.addEventListener("submit", function(e) {
-                // 1. Ativa a classe do spinner no botão
                 botaosalvar.classList.add("ativo");
-                
-                // 2. Desabilita cliques adicionais após o clique inicial
-                setTimeout(function() {
-                    botaosalvar.disabled = true;
-                }, 10);
+                botaosalvar.style.pointerEvents = "none";
             });
         }
         </script>

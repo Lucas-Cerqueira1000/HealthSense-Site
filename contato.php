@@ -289,6 +289,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="js/main-script.js"></script>
         <script src="js/scripts.js"></script>
+        <script src="js/header.js"></script>
         <script>
         document.querySelectorAll('textarea[data-maxlength]').forEach(textarea => {
   // Pega o limite definido no HTML
@@ -306,6 +307,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
       contador.textContent = `${textarea.value.length} / ${limite}`;
     }
   });
+});
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+    const mobileMenu = document.getElementById("mobile-menu");
+    const navLinks = document.querySelector(".nav-links");
+
+    if (mobileMenu && navLinks) {
+        mobileMenu.addEventListener("click", function () {
+            mobileMenu.classList.toggle("active");
+            navLinks.classList.toggle("active");
+        });
+    }
 });
         </script>
         <?php echo $alert_script; ?>

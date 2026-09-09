@@ -142,6 +142,7 @@ button.ativo .spinner {
                     <li><a href="inicial.php" class="botoes1 ">Início</a></li>
                     <li><a href="inicio.php" class="botoes1 fw-bold text-decoration-underline links">Seus Dados</a></li>
                     <li><a href="Comprar.php" class="botoes1">Comprar Pulseira</a></li>
+                    <li><a href="Tutorial.php" class="botoes1">Tutorial</a></li>
                     <li><a href="Suporte.php" class="botoes1">Suporte Técnico</a></li>
                     <!-- <li><a href="CadastrarMedicos" class="botoes1">Cadastrar Médicos</a></li> -->
                     <!-- <li><a href="DeletarMedicos.php" class="botoes1">Deletar Médicos</a></li> -->
@@ -164,7 +165,7 @@ button.ativo .spinner {
         </header>
         
         <main class="flex flex-col min-h-screen vw-100 ">
-            <h1 class="fw-bold text-center">Bem vindo, <?php echo htmlspecialchars($_SESSION['usuario_nome']); ?>:</h1>
+            <!-- <h1 class="fw-bold text-center">Bem vindo, <?php echo htmlspecialchars($_SESSION['usuario_nome']); ?>:</h1> -->
             <br><br>
             
             <form method="POST" action="atualizar_dados.php" id="formHospital">

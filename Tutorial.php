@@ -259,16 +259,15 @@ try {
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
                 <ul class="nav-links ">
-                    <li><a href="inicial.php" class="botoes1 fw-bold text-decoration-underline ">Início</a></li>
+                    <li><a href="inicial.php" class="botoes1 ">Início</a></li>
                     <li><a href="inicio.php" class="botoes1">Seus Dados</a></li>
-                    <li><a href="Comprar.php" class="botoes1">Comprar Pulseira</a></li>
-                    <li><a href="Tutorial.php" class="botoes1">Tutorial</a></li>
+                    <li><a href="Comprar.php" class=" botoes1">Comprar Pulseira</a></li>
+                    <li><a href="Tutorial.php" class="botoes1 fw-bold text-decoration-underline">Tutorial</a></li>
                     <li><a href="Suporte.php" class="botoes1">Suporte Técnico</a></li>
                     <a href="Index.html" class="botoes2">Deslogar</a>
                     <div class="theme-switch-wrapper">
                         <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
                         <label class="theme-switch" for="checkbox">
-                            <!-- <i class="fa-solid fa-circle-half-stroke display-7" aria-hidden="true"></i> -->
                             <input type="checkbox" id="checkbox" />
                             <div class="slider round"></div>
                         </label>
@@ -283,66 +282,14 @@ try {
             </nav>   
         </header>
         <main class="flex flex-col min-h-screen vw-100 ">
-            <h1 class="fw-bold text-center">Bem vindo, <?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?>!</h1>
+            <h1 class="fw-bold text-center">Aqui, <?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?> você encontrará os tutoriais de utilização do nosso produto.</h1>
+            <!-- <h2 class="text-center">Aqui você pode adquirir o produto da Health Sense Services.</h2> -->
             
             <section id="principal">
                 <section id="produto">
-                    <br>
-                    <h1 class="text-center">Algumas notícias do projeto HealthSense</h1>
-                     
-                    <!-- <div class="carousel-container">
-                        <div class="carousel-slide">
-                            <div class="custom-carousel-item">
-                                <img src="img/albert.jpg" alt="Imagem da pulseira" class="rounded img-thumbnail shadow">
-                                <div class="caption"><a href="" class="fw-bold" style="color: var(--vermelho);">G1</a></div>
-                            </div>
-                            
-                            <div class="custom-carousel-item">
-                                <img src="img/sao-paulo.jpg" alt="Imagem da pulseira no braço do paciente" class="rounded img-thumbnail shadow">
-                                <div class="caption"><a href="" class="fw-bold" style="color: var(--vermelho);">Estadão</a></div>
-                            </div>
-
-                            <div class="custom-carousel-item">
-                                <img src="img/3.png" alt="Imagem da pulseira no braço do paciente e visualização do aplicativo com eletrocardiograma" class="rounded img-thumbnail shadow">
-                                <div class="caption"><a href="" class="fw-bold" style="color: var(--vermelho);">Estado de São Paulo</a></div>
-                            </div>
-                        </div>
-
-                        <button class="prev" onclick="prevSlide()">&#10094;</button>
-                        <button class="next" onclick="nextSlide()">&#10095;</button>
-                    </div> -->
-                </section>
-                <br>
-    <div class="container my-4">
-  <div class="row">
-    <div class="col-md-4 mb-3">
-      <div class="card h-100 bg-warning">
-        <div class="card-body">
-          <h5 class="card-title text-center"><a href=""> G1</a></h5>
-          <p class="card-text">Matéria do G1 sobre o interesse do Hospital Israelita Albert Einstein no projeto.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <div class="card h-100 bg-secondary">
-        <div class="card-body">
-          <h5 class="card-title text-center"><a href=""> Estadão</a></h5>
-          <p class="card-text">Matéria do Estadão sobre teste da pulseira em projetos sociais no centro de São Paulo.</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-4 mb-3">
-      <div class="card h-100 bg-success">
-        <div class="card-body">
-          <h5 class="card-title text-center"><a href=""> Folha de São Paulo</a></h5>
-          <p class="card-text">Matéria do jornal Folha de São Paulo sobre os resultados da utilização do equipamento no Hospital São Paulo.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-           
+                <a href="Tutorial1.php">Tutorial de colocação da pusleira no braço do paciente.</a><br>
+                <a href="Tutorial2.php">Tutorial de remoção da pusleira no braço do paciente.</a><br>
+                <a href="Tutorial3.php">Tutorial de troca de batéria da pulseira.</a><br>
             </section>   
             <div class="my-5 py-3"></div>
         </main>
