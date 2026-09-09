@@ -32,16 +32,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // --- 2. GERENCIAMENTO DE SCROLL E ESMAECIMENTO DO HEADER ---
-    const header = document.querySelector('header');
-
+    // --- 2. OPACIDADE PROGRESSIVA NO SCROLL ---
     window.addEventListener('scroll', function() {
+        const header = document.querySelector('header');
         if (header) {
-            if (window.scrollY > 10) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+            const scrollY = window.scrollY;
+            const maxScroll = 200; 
+            const minOpacity = 0.9; 
+            
+            let opacity = 1 - (scrollY / maxScroll) * (1 - minOpacity);
+            opacity = Math.min(Math.max(opacity, minOpacity), 1);
+            
+            header.style.opacity = opacity;
         }
     });
 });

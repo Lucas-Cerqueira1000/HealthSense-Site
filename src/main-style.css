@@ -36,29 +36,16 @@ body {
     overflow-x: hidden;
 }
 
-/* --- HEADER E NAVBAR (PADRÃO GLOBAL) --- */
+/* --- HEADER E NAVBAR --- */
 header {
     background-color: var(--verde);
     width: 100%;
+    transition: opacity 0.15s ease-out;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
-    transition: background-color 0.3s ease, opacity 0.3s ease, backdrop-filter 0.3s ease;
-}
-
-/* Esmaecimento padrão para qualquer tela quando scrollada */
-header.scrolled {
-    background-color: rgba(20, 28, 22, 0.75);
-    backdrop-filter: blur(5px);
-}
-
-/* Regra específica para telas acima de 1300px (Desktop Grande) */
-@media (min-width: 1301px) {
-    header.scrolled {
-        /* background-color: rgba(20, 28, 22, 0.85); */
-        opacity: 0.15;
-    }
+    opacity: 1;
 }
 
 .navbar {
@@ -189,7 +176,8 @@ main {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 120px 20px 40px;
+    padding: 40px 20px;
+    padding-top: 120px !important;
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
@@ -224,19 +212,38 @@ main {
 }
 
 /* --- SWITCH DE TEMA --- */
-#mode-label {
-    color: var(--text-color);
-    font-weight: bold;
-    font-size: 15px;
-    white-space: nowrap;
-}
-
+/* --- SWITCH DE TEMA COM ÍCONES --- */
 .theme-switch-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     padding: 5px;
+}
+
+.theme-icon {
+    font-size: 1.2rem;
+    user-select: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Esconde levemente o ícone inativo */
+.theme-switch-wrapper .sun-icon {
+    opacity: 1;
+}
+
+.theme-switch-wrapper .moon-icon {
+    opacity: 0.5;
+}
+
+/* Quando o tema escuro estiver marcado */
+body.dark-theme .sun-icon {
+    opacity: 0.5;
+}
+
+body.dark-theme .moon-icon {
+    opacity: 1;
+    transform: scale(1.1);
 }
 
 .theme-switch {
@@ -246,7 +253,9 @@ main {
     width: 55px;
 }
 
-.theme-switch input { display: none; }
+.theme-switch input { 
+    display: none; 
+}
 
 .slider {
     background-color: var(--bege);
@@ -350,12 +359,8 @@ footer {
     animation: fadeIn 1.5s ease-in-out forwards;
 }
 
-/* --- MEDIA QUERIES (DISPOSITIVOS MÓVEIS) --- */
+/* --- MEDIA QUERIES --- */
 @media (max-width: 1300px) {
-    main {
-        padding-top: 120px !important;
-    }
-
     .menu-toggle {
         display: block !important;
         z-index: 1002;
@@ -379,11 +384,11 @@ footer {
         gap: 25px;
         font-size: 1.1rem;
         z-index: 1001;
-        margin: 0;
+        margin: 0;  
         padding: 20px;
         opacity: 0;
         visibility: hidden;
-        transition: left 0.4s ease, opacity 0.4s ease, visibility 0.4s ease;
+        transition: left 0.4s ease, opacity 0.8s ease, visibility 0.9s ease;
     }
 
     .nav-links.active {
