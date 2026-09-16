@@ -427,6 +427,28 @@
                 background-color: var(--verde);
                 color: white;
             }
+            .accordion-body
+            {
+                color: black;
+            }
+            #meuAcordeon, .accordion
+            {
+                background-color: var(--verdeescuro);
+            }
+            .accordion-button.collapsed {
+    background-color: #f8f9fa; /* Substitua pela cor desejada */
+    color: #000000;
+}
+/* Altera a cor do texto da resposta apenas quando aberto */
+.accordion-collapse.show .accordion-body {
+    color: #000000; /* Insira a cor desejada aqui */
+}
+/* Estilo quando o botão está aberto */
+.accordion-button:not(.collapsed) {
+    background-color: #f8f9fa; /* Defina a cor de fundo desejada */
+    color: #000000;            /* Defina a cor do texto desejada */
+    box-shadow: none;          /* Opcional: remove o contorno azul de foco */
+}
         </style>
     </head>
     <body>
@@ -629,6 +651,38 @@
             <section class="faq-container" id="FAQ">
                 <h2>Dúvidas Frequentes</h2>
                 <p class="faq-subtitle">Clique na pergunta para ver a resposta</p>
+                <!-- <div class="accordion accordion-flush" id="accordionFlushExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+        Accordion Item #1
+      </button>
+    </h2>
+    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item’s accordion body.</div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+        Accordion Item #2
+      </button>
+    </h2>
+    <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item’s accordion body. Let’s imagine this being filled with some actual content.</div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+        Accordion Item #3
+      </button>
+    </h2>
+    <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+    </div>
+  </div>
+</div> -->
                 <details class="faq-item">
                     <summary class="faq-question">O que é o nosso projeto?</summary>
                     <div class="faq-answer">
@@ -928,6 +982,15 @@
         });
     }
 });
+        </script>
+        <script>
+            const accordionCollapseElementList = document.querySelectorAll('#myAccordion .collapse')
+const accordionCollapseList = [...accordionCollapseElementList].map(accordionCollapseEl => new bootstrap.Collapse(accordionCollapseEl))
+        </script>
+        <script>
+            const bsCollapse = new bootstrap.Collapse('#myCollapse', {
+  toggle: false
+})
         </script>
     </body>
 </html>

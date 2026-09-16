@@ -20,41 +20,60 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 1. Seleciona o checkbox do switch de tema
     const toggleSwitch = document.getElementById('checkbox');
-    const modeLabel = document.getElementById('mode-label'); // Opcional: para mudar o texto
+    const modeLabel = document.getElementById('mode-label'); // Opcional
 
-    // 2. Verifica se já existe um tema salvo no localStorage
-    const currentTheme = localStorage.getItem('theme');
+    // 2. Verifica as preferências:
+    // a) Tema salvo manualmente pelo usuário
+    const savedTheme = localStorage.getItem('theme');
+    
+    // b) Preferência do sistema do usuário (Dark Mode nativo do SO/Navegador)
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
 
-    // 3. Se houver um tema salvo, aplica ele na página
-    if (currentTheme) {
-        if (currentTheme === 'dark') {
-            document.body.classList.add('dark-theme');
-            toggleSwitch.checked = true; // Mantém o switch marcado
-            // modeLabel.textContent = 'Modo Claro'; // Descomente se quiser alternar o texto
-        }
+    // 3. Aplica o tema na inicialização
+    if (savedTheme === 'dark') {
+        // Se a pessoa já escolheu escuro manualmente
+        document.body.classList.add('dark-theme');
+        if (toggleSwitch) toggleSwitch.checked = true;
+    } else if (savedTheme === 'light') {
+        // Se a pessoa já escolheu claro manualmente
+        document.body.classList.remove('dark-theme');
+        if (toggleSwitch) toggleSwitch.checked = false;
+    } else if (prefersDarkScheme.matches) {
+        // Se não há preferência salva no localStorage, usa a do sistema
+        document.body.classList.add('dark-theme');
+        if (toggleSwitch) toggleSwitch.checked = true;
     }
 
-    // 4. Função que roda toda vez que o usuário clica no switch
+    // 4. Função para alternar o tema manualmente via checkbox
     function switchTheme(e) {
         if (e.target.checked) {
-            // Ativa o modo escuro
             document.body.classList.add('dark-theme');
-            // Salva no localStorage
             localStorage.setItem('theme', 'dark');
-            // modeLabel.textContent = 'Modo Claro';
         } else {
-            // Desativa o modo escuro
             document.body.classList.remove('dark-theme');
-            // Salva no localStorage
             localStorage.setItem('theme', 'light');
-            // modeLabel.textContent = 'Modo Escuro';
         }
     }
 
-    // 5. Adiciona o ouvinte de evento no checkbox
-    toggleSwitch.addEventListener('change', switchTheme);
-});
+    // 5. Adiciona o evento de troca manual ao checkbox
+    if (toggleSwitch) {
+        toggleSwitch.addEventListener('change', switchTheme);
+    }
 
+    // 6. Listener para atualizar automaticamente se o usuário alterar o tema no SO
+    // (Apenas se ele ainda não tiver fixado uma opção manual no site)
+    prefersDarkScheme.addEventListener('change', (e) => {
+        if (!localStorage.getItem('theme')) {
+            if (e.matches) {
+                document.body.classList.add('dark-theme');
+                if (toggleSwitch) toggleSwitch.checked = true;
+            } else {
+                document.body.classList.remove('dark-theme');
+                if (toggleSwitch) toggleSwitch.checked = false;
+            }
+        }
+    });
+});
 // Mascara do telefone
 
 const inputCelular = document.getElementById('telefone');
