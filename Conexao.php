@@ -6,6 +6,7 @@ mysqli_set_charset($con, "utf8mb4");
 
 if (!$con) 
 {
-    die('Erro ao conectar: ' . mysqli_connect_error());
+    // die('Erro ao conectar: ' . mysqli_connect_error());
+    header("Location: erro_conexao.php");
 }
 ?>

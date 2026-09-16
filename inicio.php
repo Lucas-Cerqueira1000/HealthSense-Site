@@ -31,7 +31,8 @@ try {
     $_SESSION['usuario_nome'] = $dadosHospital['nome'];
 
 } catch (PDOException $e) {
-    echo "Erro na conexão: " . $e->getMessage();
+    // echo "Erro na conexão: " . $e->getMessage();
+    header("Location: erro_conexao.php");
     exit;
 }
 ?>
@@ -297,6 +298,7 @@ button.ativo .spinner {
         
         <script src="js/main-script.js"></script>
         <script src="js/scripts.js"></script>
+        <script src="js/header.js"></script>
         
         <script>
         // Função unificada para gerenciar a visibilidade dos botões Salvar/Deletar dinamicamente

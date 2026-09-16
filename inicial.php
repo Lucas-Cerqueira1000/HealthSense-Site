@@ -31,14 +31,15 @@ try {
     $_SESSION['usuario_nome'] = $dadosHospital['nome'];
 
 } catch (PDOException $e) {
-    echo "Erro na conexão: " . $e->getMessage();
+    // echo "Erro na conexão: " . $e->getMessage();
+    header("Location: erro_conexao.php");
     exit;
 }
 ?>
 <!doctype html>
 <html lang="pt-br">
     <head>
-        <title>Comprar Produto</title>
+        <title>Notícias</title>
         <meta charset="utf-8" />
         <link rel="icon" href="img/logo1.png">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -361,6 +362,7 @@ try {
         </footer>
 
         <script src="js/main-script.js"></script>
+        <script src="js/header.js"></script>
         <script src="js/scripts.js"></script>
         <script>
         // ==========================================

@@ -31,7 +31,8 @@ try {
     $_SESSION['usuario_nome'] = $dadosHospital['nome'];
 
 } catch (PDOException $e) {
-    echo "Erro na conexão: " . $e->getMessage();
+    // echo "Erro na conexão: " . $e->getMessage();
+    header("Location: erro_conexao.php");
     exit;
 }
 ?>
@@ -248,6 +249,14 @@ try {
             opacity: 0;
             pointer-events: none; 
         }
+        #accordionFlushExample
+        {
+            max-width: 130px;
+        }
+        .alert-primary, .alert-success, .alert-danger
+        {
+            transform: scale(0.9);
+        }
     </style>
     <body>
         <header>
@@ -294,12 +303,20 @@ try {
             <!-- <h2 class="text-center">Aqui você pode adquirir o produto da Health Sense Services.</h2> -->
             
             <section id="principal">
-                <section id="produto">
-                <a href="Tutorial1.php">Tutorial de colocação da pusleira no braço do paciente.</a><br>
-                <a href="Tutorial2.php">Tutorial de remoção da pusleira no braço do paciente.</a><br>
-                <a href="Tutorial3.php">Tutorial de troca de batéria da pulseira.</a><br>
+                <section id="produto"><br>
+                <!-- <a href="img/Tutorial_Colocar_Pulseira.png">Tutorial de colocação da pusleira no braço do paciente.</a><br> -->
+                 <div class="alert alert-primary" role="alert">
+ Tutorial de colocação da <a href="img/Tutorial_Colocar_Pulseira.png" class="alert-link">pulseira</a>&nbsp;no braço do paciente..
+</div>
+
+                 <div class="alert alert-success" role="alert">
+  Tutorial de remoção da <a href="img/Tutorial_Remocao_Pulseira.png" class="alert-link">pulseira</a> do braço do paciente.
+</div>
+                 <div class="alert alert-danger" role="alert">
+  Tutorial de troca da bateria da <a href="img/Tutorial_Troca_Bateria" class="alert-link">pulseira</a>.
+</div>
             </section>   
-            <div class="my-5 py-3"></div>
+            <!-- <div class="my-5 py-3"></div> -->
         </main>
         
         <footer class="mt-auto container-fluid vw-100 text-center">
@@ -310,6 +327,7 @@ try {
 
         <script src="js/main-script.js"></script>
         <script src="js/scripts.js"></script>
+        <script src="js/header.js"></script>
         <script>
         // ==========================================
         // CARROSSEL CORRIGIDO
