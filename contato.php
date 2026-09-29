@@ -1,47 +1,3 @@
-<?php
-include ('Conexao.php');
-
-// Variável para armazenar o estado do SweetAlert
-$alert_script = "";
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') 
-{
-    // Limpeza padrão para campos normais contra SQL Injection
-    $nome = mysqli_real_escape_string($con, $_POST['nome']);
-    $email = mysqli_real_escape_string($con, $_POST['email']);
-    $assunto = mysqli_real_escape_string($con, $_POST['assunto']);
-    $mensagem = mysqli_real_escape_string($con, $_POST['mensagem']);          
-
-    // Query de inserção
-    $query = "INSERT INTO tabContato (nome, email, assunto ,mensagem) 
-              VALUES ('$nome', '$email', '$assunto', '$mensagem')";
-
-    $result = mysqli_query($con, $query);
-
-    if($result) 
-    {
-        $alert_script = "
-        <script> 
-        Swal.fire({
-            title: 'Sucesso!',
-            text: 'Mensagem enviada com sucesso!',
-            icon: 'success',
-        });
-        </script>";
-    }       
-    else 
-    {
-        $alert_script = "
-        <script> 
-        Swal.fire({
-            title: 'Erro',
-            html: 'Não foi possível salvar a mensagem no banco.',
-            icon: 'error'
-        });
-        </script>";
-    }
-}
-?>
 <!doctype html>
 <html lang="pt-br">
     <head>
@@ -52,31 +8,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
+        <!-- Font Awesome Adicionado para os ícones funcionarem -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-        <link rel="stylesheet" href="../bootstrap-5.3.8-dist/css/bootstrap.css">
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
-    
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
-        ></script>
-
         <link rel="stylesheet" href="src/main-style.css">
 
         <style>
-        #nossoprojeto {
+        #nossoprojeto 
+        {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -85,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             background-color: var(--verdeescuro);
             padding: 40px;
             color: white;
+            flex-direction: column;
             border-radius: 40px;
             margin: 20px auto;
             max-width: 90%;
@@ -102,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             background-color:var(--verde);
             color: white;
             border-radius: 70px;
+            padding: 20px 0;
         }
         @media(max-width: 1000px) {
             #prints {
@@ -122,19 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             border-radius: 5px;
             font-size: 20px;
             color: white;
-            /* cursor: help; */
-        }
-        #email
-        {
-            background-color: var(--verdeescuro);
-            width: 100%;
-            max-width: 600px;
-            height: 130px;
-            resize: none;
-            border-radius: 5px;
-            font-size: 20px;
-            color: white;
-            /* cursor: help; */
         }
         #assunto 
         {
@@ -146,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             border-radius: 5px;
             font-size: 20px;
             color: white;
-            /* cursor: help; */
         }
         #mensagem 
         {
@@ -158,7 +91,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             border-radius: 5px;
             font-size: 20px;
             color: white;
-            /* cursor: help; */
         }
         #contato 
         {
@@ -182,14 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
             color: white;
             opacity: 0.7;
-            
         }
         #nome::placeholder
-        {
-            color: white;
-            opacity: 0.7;
-        }
-        #email::placeholder
         {
             color: white;
             opacity: 0.7;
@@ -207,34 +133,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 top: 4px;
             }
         }
+        #email
+        {
+            color: var(--vermelho);
+            cursor: pointer;
+            text-decoration: none;
+            position: relative;     /* Referência para a linha do ::after */
+            display: inline-block;  /* Ajusta a largura apenas ao texto */
+            background: transparent;
+            height: auto;           /* Remove a altura fixa de 130px que gerava o espaço em branco */
+        }
+        /* Estilização básica do texto */
+        /* Criando a linha com o pseudo-elemento */
+        #email::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px; /* Espessura da linha */
+            bottom: -4px; /* Distância da linha em relação ao texto */
+            left: 0;
+            background-color: var(--vermelho); /* Cor da linha */
+            
+            /* O segredo da animação está aqui */
+            transform: scaleX(0); /* Começa com tamanho zero (invisível) */
+            transform-origin: center; /* Garante que cresça a partir do centro */
+            transition: transform 0.3s ease-in-out; /* Define a velocidade da animação */
+        }
+
+        /* Efeito ao passar o mouse (Hover) */
+        #email:hover::after {
+            transform: scaleX(1); /* Expande para o tamanho total (100%) */
+        }
         </style>
     </head>
-    <body>
+    <body class="d-flex flex-column min-vh-100">
         <header>
             <nav class="navbar">
                 <div class="overlay"></div>
                 <div class="logo fs-3">
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
-                <ul class="nav-links ">
+                <ul class="nav-links">
                     <li><a href="index.html" id="inicio">Início</a></li>
                     <li><a href="contato.php" class="botoes fw-bold text-decoration-underline" id="contato1">Contato</a></li>
-                    <li><a href="login.php" class=" botoes" id="entre" >Entre</a></li>
-                    <!-- <div class="theme-switch-wrapper">
-                        <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
+                    <li><a href="login.php" class="botoes" id="entre">Entre</a></li>
+                    <div class="theme-switch-wrapper">
+                        <span class="theme-icon sun-icon" id="mode-label">☀️</span>
                         <label class="theme-switch" for="checkbox">
-                            <input type="checkbox" id="checkbox" />
-                            <div class="slider round"></div>
+                            <input type="checkbox" id="checkbox">
+                            <span class="slider round"></span>
                         </label>
-                    </div> -->
-                                        <div class="theme-switch-wrapper">
-    <span class="theme-icon sun-icon" id="mode-label">☀️</span>
-    <label class="theme-switch" for="checkbox">
-        <input type="checkbox" id="checkbox">
-        <span class="slider round"></span>
-    </label>
-    <span class="theme-icon moon-icon">🌙</span>
-</div>
+                        <span class="theme-icon moon-icon">🌙</span>
+                    </div>
                 </ul>
                 <div class="menu-toggle" id="mobile-menu">
                     <span class="bar"></span>
@@ -244,92 +194,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             </nav>  
         </header>
 
-        <main class="flex flex-col min-h-screen w-full">
-        <br><br>
-        <section id="principal">
-            <section id="projeto">
-                <h1 class="text-center m-4">Formas de contatar-nos:</h1>   
-                <p class="text-center container" id="nossoprojeto">Telefone: (11)4125-2288 <br> E-mail: healthsense@gmail.com <br> Endereço: Avenida Pereira Barreto - Baeta Neves - São Bernardo do Campo - CEP: 09751-000</p>
+        <main class="w-100">
+            <section id="principal">
+                <section id="projeto">
+                    <h1 class="text-center m-4">Formas de contatar-nos:</h1>
+                    <section id="nossoprojeto">
+                        <p class="text-center container contato mb-3">
+                            Telefone: (11)4125-2288 <br> 
+                            Endereço: Avenida Pereira Barreto - Baeta Neves - São Bernardo do Campo <br> CEP: 09751-000
+                        </p>
+                        <a class="text-center container contato" href="processa-contato.php" target="_blank" id="email">
+                            E-mail: healthsense@gmail.com
+                        </a>
+                    </section>   
+                </section>
             </section>
-
-            <h3 class="text-center m-6">Utilize o formulário abaixo para enviar suas reclamações, dúvidas e sugestões.</h3>
-            <br>
-            
-            <section id="contato">
-                <form action="contato.php" method="POST">
-                    <label id="lbl">Nome: - Obrigatório</label>
-                    <br>
-                    <textarea name="nome" id="nome" placeholder="Digite aqui o seu nome completo." required maxlength="200" data-maxlength="200" rows="5"></textarea>
-                    <div id="contador">0 / 200</div>
-                    <br>
-                    <label id="lbl">E-mail: - Obrigatório</label>
-                    <br>
-                    <textarea name="email" id="email" placeholder="Digite aqui o seu e-mail para lhe contatarmos posteriormente." required maxlength="256" data-maxlength="256" rows="5"></textarea>
-                    <div id="contador">0 / 256</div>
-                    <br>
-                    <label id="lbl">Assunto: - Obrigatório</label>
-                    <br>
-                    <textarea name="assunto" id="assunto" placeholder="Digite aqui o assunto da mensagem." required data-maxlength="150"></textarea>
-                    <div id="contador">0 / 150</div>
-                    <br>
-                    <label id="lbl">Mensagem: - Obrigatório</label>
-                    <br>
-                    <textarea name="mensagem" id="mensagem" placeholder="Digite aqui a sua mensagem." required data-maxlength="700"></textarea>
-                    <div id="contador">0 / 700</div>
-                    <br><br>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-success mb-2" id="btnEnviar">Enviar Mensagem</button>
-                        <button type="reset" class="btn btn-danger">Limpar Mensagem</button>
-                    </div>
-                    <br>
-                </form>
-            </section>
-        </section>
-            <br><br><br><br>
         </main>
 
-        <footer class="mt-auto container-fluid w-full text-center">
+        <footer class="mt-auto container-fluid w-full text-center py-3">
              <div class="text-center container">
               <h3 class="text-center container" id="copy">&copy; HealthSense Systems</h3>
              </div>
         </footer>
 
+        <!-- JS do Bootstrap Bundle -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        
         <script src="js/main-script.js"></script>
         <script src="js/scripts.js"></script>
         <script src="js/header.js"></script>
-        <script>
-        document.querySelectorAll('textarea[data-maxlength]').forEach(textarea => {
-  // Pega o limite definido no HTML
-  const limite = parseInt(textarea.getAttribute('data-maxlength'), 10);
-  const contador = textarea.nextElementSibling; // Assume que o contador está logo abaixo
 
-  textarea.addEventListener('input', () => {
-    // Corta o texto caso ultrapasse o limite
-    if (textarea.value.length > limite) {
-      textarea.value = textarea.value.substring(0, limite);
-    }
-    
-    // Atualiza o texto do contador
-    if (contador) {
-      contador.textContent = `${textarea.value.length} / ${limite}`;
-    }
-  });
-});
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-    const mobileMenu = document.getElementById("mobile-menu");
-    const navLinks = document.querySelector(".nav-links");
-
-    if (mobileMenu && navLinks) {
-        mobileMenu.addEventListener("click", function () {
-            mobileMenu.classList.toggle("active");
-            navLinks.classList.toggle("active");
-        });
-    }
-});
-        </script>
-        <?php echo $alert_script; ?>
     </body>
 </html>

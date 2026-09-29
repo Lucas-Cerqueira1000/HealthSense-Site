@@ -1,40 +1,40 @@
 <?php 
-session_start();
+// session_start();
 
-if(!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
-    exit;
-}
+// if(!isset($_SESSION['usuario_id'])) {
+//     header("Location: login.php");
+//     exit;
+// }
 
-// Configurações do Banco de Dados
-$host = 'tcc_bd35.mysql.dbaas.com.br';
-$dbname = 'tcc_bd35';
-$username = 'tcc_bd35';
-$password = 'ROSA123456a#';
+// // Configurações do Banco de Dados
+// $host = 'tcc_bd35.mysql.dbaas.com.br';
+// $dbname = 'tcc_bd35';
+// $username = 'tcc_bd35';
+// $password = 'ROSA123456a#';
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// try {
+//     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+//     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Busca as informações atualizadas do hospital logado
-    $stmt = $pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
-    $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
-    $stmt->execute();
-    $dadosHospital = $stmt->fetch(PDO::FETCH_ASSOC);
+//     // Busca as informações atualizadas do hospital logado
+//     $stmt = $pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
+//     $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
+//     $stmt->execute();
+//     $dadosHospital = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    if (!$dadosHospital) {
-        echo "Dados do hospital não encontrados.";
-        exit;
-    }
+//     if (!$dadosHospital) {
+//         echo "Dados do hospital não encontrados.";
+//         exit;
+//     }
     
-    // Força a atualização do nome da sessão com o dado real vindo do banco
-    $_SESSION['usuario_nome'] = $dadosHospital['nome'];
+//     // Força a atualização do nome da sessão com o dado real vindo do banco
+//     $_SESSION['usuario_nome'] = $dadosHospital['nome'];
 
-} catch (PDOException $e) {
-    // echo "Erro na conexão: " . $e->getMessage();
-    header("Location: erro_conexao.php");
-    exit;
-}
+// } catch (PDOException $e) {
+//     // echo "Erro na conexão: " . $e->getMessage();
+//     header("Location: erro_conexao.php");
+//     exit;
+// }
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -64,6 +64,7 @@ try {
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+        <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
         <script src="https://kit.fontawesome.com/f2c06f6363.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="src/main-style.css">
@@ -249,6 +250,37 @@ try {
             opacity: 0;
             pointer-events: none; 
         }
+        #modelo
+        {
+           background-color: var(--verde);
+           border-radius: 40px;
+           width: 700px;
+           height: 550px;
+           cursor: pointer;
+           margin: 0 auto;
+           overflow: hidden;
+        }
+         #produto
+        {
+                width: 100%;
+                height: 100%;
+        }
+         @media(max-width: 720px) {
+                #modelo {
+                    width: 90%;
+                    height: 400px;
+                }
+            }
+            @media(max-width: 520px) {
+                #modelo {
+                    height: 300px;
+                }
+            }
+            @media(max-width: 420px) {
+                #modelo {
+                    height: 250px;
+                }
+            }
     </style>
     <body>
         <header>
@@ -302,17 +334,17 @@ try {
                     <div class="carousel-container">
                         <div class="carousel-slide">
                             <div class="custom-carousel-item">
-                                <img src="img/1.png" alt="Imagem da pulseira" class="rounded img-thumbnail shadow">
+                                <img src="img/14.png" alt="Imagem da pulseira" class="rounded img-thumbnail shadow">
                                 <div class="caption">Imagem da pulseira.</div>
                             </div>
                             
                             <div class="custom-carousel-item">
-                                <img src="img/2.png" alt="Imagem da pulseira no braço do paciente" class="rounded img-thumbnail shadow">
+                                <img src="img/15.png" alt="Imagem da pulseira no braço do paciente" class="rounded img-thumbnail shadow">
                                 <div class="caption">Imagem da pulseira no braço do paciente.</div>
                             </div>
 
                             <div class="custom-carousel-item">
-                                <img src="img/3.png" alt="Imagem da pulseira no braço do paciente e visualização do aplicativo com eletrocardiograma" class="rounded img-thumbnail shadow">
+                                <img src="img/16.png" alt="Imagem da pulseira no braço do paciente e visualização do aplicativo com eletrocardiograma" class="rounded img-thumbnail shadow">
                                 <div class="caption">Imagem da pulseira no braço do paciente e visualização do aplicativo com eletrocardiograma.</div>
                             </div>
 
@@ -326,6 +358,16 @@ try {
                         <button class="next" onclick="nextSlide()">&#10095;</button>
                     </div>
                 </section>
+                      <section id="modelo">
+                <model-viewer 
+                    src="Meshy_AI_Pulse_Ring_0616152056_texture.glb" 
+                    alt="Modelo 3D da pulseira inteligente Health Sense" 
+                    auto-rotate 
+                    camera-controls 
+                    id="produto"
+                    class="text-center">
+                </model-viewer>
+            </section>
                 <br>
                 <section class="text-center" id="prints">
                     <div class="text-center">
@@ -654,7 +696,7 @@ try {
 
         function startTimer() {
             if (timer) clearInterval(timer);
-            timer = setInterval(nextSlide, 4000); 
+            timer = setInterval(nextSlide, 3000); 
         }
 
         function nextSlide() {

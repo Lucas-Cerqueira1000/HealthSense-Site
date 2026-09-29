@@ -1,6 +1,6 @@
 <?php
 // Define o código de resposta HTTP como 503 (Serviço Indisponível)
-http_response_code(503);
+http_response_code(404);
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -196,10 +196,10 @@ http_response_code(503);
 
         <div class="actions">
             <button class="btn-retry btn-info" onclick="recarregarPagina()">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <!-- <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M160 80 A80 80 0 1 0 240 160" transform="scale(0.09)"/>
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h5M20 20v-5h-5" />
-                </svg>
+                </svg> -->
                 Tentar Novamente
             </button>
             <a href="javascript:history.back()" class="btn-back">Voltar à Página Anterior</a>

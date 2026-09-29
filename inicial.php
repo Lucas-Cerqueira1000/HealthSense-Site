@@ -1,40 +1,40 @@
 <?php 
-session_start();
+// session_start();
 
-if(!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
-    exit;
-}
+// if(!isset($_SESSION['usuario_id'])) {
+//     header("Location: login.php");
+//     exit;
+// }
 
-// Configurações do Banco de Dados
-$host = 'tcc_bd35.mysql.dbaas.com.br';
-$dbname = 'tcc_bd35';
-$username = 'tcc_bd35';
-$password = 'ROSA123456a#';
+// // Configurações do Banco de Dados
+// $host = 'tcc_bd35.mysql.dbaas.com.br';
+// $dbname = 'tcc_bd35';
+// $username = 'tcc_bd35';
+// $password = 'ROSA123456a#';
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// try {
+//     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+//     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Busca as informações atualizadas do hospital logado
-    $stmt = $pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
-    $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
-    $stmt->execute();
-    $dadosHospital = $stmt->fetch(PDO::FETCH_ASSOC);
+//     // Busca as informações atualizadas do hospital logado
+//     $stmt = $pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
+//     $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
+//     $stmt->execute();
+//     $dadosHospital = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    if (!$dadosHospital) {
-        echo "Dados do hospital não encontrados.";
-        exit;
-    }
+//     if (!$dadosHospital) {
+//         echo "Dados do hospital não encontrados.";
+//         exit;
+//     }
     
-    // Força a atualização do nome da sessão com o dado real vindo do banco
-    $_SESSION['usuario_nome'] = $dadosHospital['nome'];
+//     // Força a atualização do nome da sessão com o dado real vindo do banco
+//     $_SESSION['usuario_nome'] = $dadosHospital['nome'];
 
-} catch (PDOException $e) {
-    // echo "Erro na conexão: " . $e->getMessage();
-    header("Location: erro_conexao.php");
-    exit;
-}
+// } catch (PDOException $e) {
+//     // echo "Erro na conexão: " . $e->getMessage();
+//     header("Location: erro_conexao.php");
+//     exit;
+// }
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -249,6 +249,15 @@ try {
             opacity: 0;
             pointer-events: none; 
         }
+       /* 1. O SEGREDO: Transição suave aplicada aqui garante o efeito na saída */
+       .cards{ 
+  transition: transform 0.3s ease-in-out;
+}
+
+.cards:hover {
+  /* 2. Efeito de crescimento (1.1 significa 10% maior) */
+  transform: scale(1.1);
+}
     </style>
     <body>
         <header>
@@ -324,7 +333,7 @@ try {
     <div class="container my-4">
   <div class="row">
     <div class="col-md-4 mb-3">
-      <div class="card h-100 bg-warning">
+      <div class="card h-100 bg-warning cards">
         <div class="card-body">
           <h5 class="card-title text-center"><a href=""> G1</a></h5>
           <p class="card-text">Matéria do G1 sobre o interesse do Hospital Israelita Albert Einstein no projeto.</p>
@@ -332,7 +341,7 @@ try {
       </div>
     </div>
     <div class="col-md-4 mb-3">
-      <div class="card h-100 bg-secondary">
+      <div class="card h-100 bg-info cards">
         <div class="card-body">
           <h5 class="card-title text-center"><a href=""> Estadão</a></h5>
           <p class="card-text">Matéria do Estadão sobre teste da pulseira em projetos sociais no centro de São Paulo.</p>
@@ -340,10 +349,10 @@ try {
       </div>
     </div>
     <div class="col-md-4 mb-3">
-      <div class="card h-100 bg-success">
+      <div class="card h-100 bg-dark cards">
         <div class="card-body">
           <h5 class="card-title text-center"><a href=""> Folha de São Paulo</a></h5>
-          <p class="card-text">Matéria do jornal Folha de São Paulo sobre os resultados da utilização do equipamento no Hospital São Paulo.</p>
+          <p class="card-text text-white">Matéria do jornal Folha de São Paulo sobre os resultados da utilização do equipamento no Hospital São Paulo.</p>
         </div>
       </div>
     </div>

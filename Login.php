@@ -74,11 +74,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $pdo) {
         <title>Formulário de Login</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- Font Awesome Adicionado para os ícones funcionarem -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cloudflare.com">
         <link rel="stylesheet" href="src/main-style.css">
         
         <style>
@@ -270,12 +273,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $pdo) {
                                     
                                     <div class="input-container">
                                         <input type="email" id="exampleInputEmail1" placeholder=" " name="email" required>
-                                        <label for="exampleInputEmail1" >Digite seu e-mail</label>
+                                        <label for="exampleInputEmail1"><i class="fa fa-envelope"></i>&nbsp;Digite seu e-mail</label>
                                     </div>
                                     
                                     <div class="input-container">  
                                         <input type="password" id="exampleInputPassword1" name="senha" required placeholder=" ">
-                                        <label for="exampleInputPassword1">Digite sua senha</label>
+                                        <label for="exampleInputPassword1"><i class="fa-solid fa-unlock"></i>&nbsp;Digite sua senha</label>
                                     </div>
 
                                     <div class="mb-3 form-check"> 
@@ -284,7 +287,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $pdo) {
                                     </div>
                                     
                                     <a href="Cadastro.php" class="text-center text-decoration-underline fw-bold d-block mb-3">Não possui login?</a>
-                                    
+                                    <a href="" class="text-center text-decoration-line-through fw-bold d-block mb-3" aria-disabled="true">Esqueceu a Senha?(Em breve)</a>
                                     <div class="text-center mt-3">
                                         <button type="submit" class="btn btn-success btn-lg w-100 mb-2 position-relative" id="btnEntrar">
                                             <span class="texto-botao">Entrar</span>

@@ -1,40 +1,40 @@
 <?php 
-session_start();
+// session_start();
 
-if(!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
-    exit;
-}
+// if(!isset($_SESSION['usuario_id'])) {
+//     header("Location: login.php");
+//     exit;
+// }
 
-// Configurações do Banco de Dados
-$host = 'tcc_bd35.mysql.dbaas.com.br';
-$dbname = 'tcc_bd35';
-$username = 'tcc_bd35';
-$password = 'ROSA123456a#';
+// // Configurações do Banco de Dados
+// $host = 'tcc_bd35.mysql.dbaas.com.br';
+// $dbname = 'tcc_bd35';
+// $username = 'tcc_bd35';
+// $password = 'ROSA123456a#';
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// try {
+//     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+//     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Busca as informações atualizadas do hospital logado
-    $stmt = $pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
-    $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
-    $stmt->execute();
-    $dadosHospital = $stmt->fetch(PDO::FETCH_ASSOC);
+//     // Busca as informações atualizadas do hospital logado
+//     $stmt = $pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
+//     $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
+//     $stmt->execute();
+//     $dadosHospital = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    if (!$dadosHospital) {
-        echo "Dados do hospital não encontrados.";
-        exit;
-    }
+//     if (!$dadosHospital) {
+//         echo "Dados do hospital não encontrados.";
+//         exit;
+//     }
     
-    // Força a atualização do nome da sessão com o dado real vindo do banco
-    $_SESSION['usuario_nome'] = $dadosHospital['nome'];
+//     // Força a atualização do nome da sessão com o dado real vindo do banco
+//     $_SESSION['usuario_nome'] = $dadosHospital['nome'];
 
-} catch (PDOException $e) {
-    // echo "Erro na conexão: " . $e->getMessage();
-    header("Location: erro_conexao.php");
-    exit;
-}
+// } catch (PDOException $e) {
+//     // echo "Erro na conexão: " . $e->getMessage();
+//     header("Location: erro_conexao.php");
+//     exit;
+// }
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -43,6 +43,8 @@ try {
         <meta charset="utf-8" />
         <link rel="icon" href="img/logo1.png">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <!-- Font Awesome Adicionado para os ícones funcionarem -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <link rel="stylesheet" href="https://cloudflare.com">
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -131,6 +133,48 @@ button.ativo .spinner {
         width: 90vw;
     }
 }
+
+    /* 2. Estilo da caixinha de texto (escondida por padrão) */
+    .tooltip-container .tooltip-text {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      bottom: 130%; /* Posiciona a caixa acima do botão */
+      left: 50%;
+      transform: translateX(-50%); /* Centraliza perfeitamente */
+      background-color: #222;
+      color: #fff;
+      text-align: center;
+      padding: 8px 12px;
+      border-radius: 4px;
+      white-space: nowrap;
+      font-size: 14px;
+      font-weight: normal;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+      
+      /* Efeito de transição suave */
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      /* O SEGREDO: Atraso de 0.5 segundos antes de aparecer */
+      transition-delay: 0.5s; 
+    }
+
+    /* 3. Pequena seta na parte de baixo da caixinha de texto */
+    .tooltip-container .tooltip-text::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #222 transparent transparent transparent;
+    }
+
+    /* 4. Quando o mouse passa por cima, a caixinha aparece */
+    .tooltip-container:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
     </style>
     <body>
         <header>
@@ -182,95 +226,106 @@ button.ativo .spinner {
                 <h1 class="fw-bold text-center">Suas informações:</h1>
                 
                 <div class="mb-3">
-                    <label for="email" class="form-label fw-bold">Endereço de e-mail:</label>
+                    <label for="email" class="form-label fw-bold"><i class="fa-solid fa-envelope"></i>&nbsp;Endereço de e-mail:</label>
                     <div class="d-flex align-items-center">
-                        <input type="email" class="form-control me-2" id="email" name="email" readonly value="<?php echo htmlspecialchars($dadosHospital['email']); ?>">
-                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('email')">
+                    <input type="email" class="form-control me-2" id="email" name="email" readonly value="<?php echo htmlspecialchars($dadosHospital['email']); ?>">
+                        <span class="tooltip-text">Esta é a pequena caixa de texto! 🚀</span>
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar tooltip-container" style="cursor:pointer;" onclick="ativarInput('email')">
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="nome" class="form-label fw-bold">Nome do seu hospital:</label>
+                    <label for="nome" class="form-label fw-bold"><i class="fas fa-hospital"></i></i>&nbsp;Nome do seu hospital:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="nome" name="nome" readonly value="<?php echo htmlspecialchars($dadosHospital['nome']); ?>">
-                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('nome')">
+                        <span class="tooltip-text">Esta é a pequena caixa de texto! 🚀</span>
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar tooltip-container" style="cursor:pointer;" onclick="ativarInput('nome')">
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="telefone" class="form-label fw-bold">Telefone:</label>
+                    <label for="telefone" class="form-label fw-bold"><i class="fa fa-phone"></i>&nbsp;Telefone:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="telefone" name="telefone" maxlength="15" readonly value="<?php echo htmlspecialchars($dadosHospital['telefone']); ?>">
-                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('telefone')">
+                        <span class="tooltip-text">Esta é a pequena caixa de texto! 🚀</span>
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar tooltip-container" style="cursor:pointer;" onclick="ativarInput('telefone')">
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="cep" class="form-label fw-bold">CEP:</label>
+                    <label for="cep" class="form-label fw-bold"><i class="fa-solid fa-location-dot"></i>&nbsp;CEP:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="cep" name="cep" maxlength="9" readonly value="<?php echo htmlspecialchars($dadosHospital['cep']); ?>">
-                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('cep')">
+                        <span class="tooltip-text">Esta é a pequena caixa de texto! 🚀</span>
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar tooltip-container" style="cursor:pointer;" onclick="ativarInput('cep')">
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="rua" class="form-label fw-bold">Rua:</label>
+                    <label for="rua" class="form-label fw-bold"><i class="fa-solid fa-road"></i>&nbsp;Rua:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="rua" name="rua" readonly value="<?php echo htmlspecialchars($dadosHospital['rua']); ?>" placeholder="CEP sem rua.">
-                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('rua')">
+                        <span class="tooltip-text">Esta é a pequena caixa de texto! 🚀</span>
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar tooltip-container" style="cursor:pointer;" onclick="ativarInput('rua')">
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="cidade" class="form-label fw-bold">Cidade:</label>
+                    <label for="cidade" class="form-label fw-bold"><i class="fa-solid fa-city"></i>&nbsp;Cidade:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="cidade" name="cidade" readonly value="<?php echo htmlspecialchars($dadosHospital['cidade']); ?>">
-                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('cidade')">
+                        <span class="tooltip-text">Esta é a pequena caixa de texto! 🚀</span>
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar tooltip-container" style="cursor:pointer;" onclick="ativarInput('cidade')">
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="bairro" class="form-label fw-bold">Bairro:</label>
+                    <label for="bairro" class="form-label fw-bold"><i class="fa-solid fa-house"></i>&nbsp;Bairro:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="bairro" name="bairro" readonly value="<?php echo htmlspecialchars($dadosHospital['bairro']); ?>" placeholder="CEP sem bairro.">
-                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('bairro')">
+                        <span class="tooltip-text">Esta é a pequena caixa de texto! 🚀</span>
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar tooltip-container" style="cursor:pointer;" onclick="ativarInput('bairro')">
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="estado" class="form-label fw-bold">Estado(Digite apenas a sigla):</label>
+                    <label for="estado" class="form-label fw-bold"><i class="fa-solid fa-flag"></i>&nbsp;Estado(Digite apenas a sigla):</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="estado" name="estado" readonly value="<?php echo htmlspecialchars($dadosHospital['estado']); ?>">
-                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('estado')">
+                        <span class="tooltip-text">Esta é a pequena caixa de texto! 🚀</span>
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar tooltip-container" style="cursor:pointer;" onclick="ativarInput('estado')">
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="cnpj" class="form-label fw-bold">CNPJ:</label>
+                    <label for="cnpj" class="form-label fw-bold"><i class="fa-solid fa-id-card"></i>&nbsp;CNPJ:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="cnpj" name="cnpj" readonly oninput="mascaraCNPJ(this)" maxlength="18" value="<?php echo htmlspecialchars($dadosHospital['cnpj']); ?>">
-                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('cnpj')">
+                        <span class="tooltip-text">Esta é a pequena caixa de texto! 🚀</span>
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar tooltip-container" style="cursor:pointer;" onclick="ativarInput('cnpj')">
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="cnes" class="form-label fw-bold">CNES:</label>
+                    <label for="cnes" class="form-label fw-bold"><i class="fa-solid fa-hospital"></i>&nbsp;CNES:</label>
                     <div class="d-flex align-items-center">
                         <input type="text" class="form-control me-2" id="cnes" name="cnes"  maxlength="7" readonly value="<?php echo htmlspecialchars($dadosHospital['cnes']); ?>">
-                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInput('cnes')">
+                        <span class="tooltip-text">Esta é a pequena caixa de texto! 🚀</span>
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar tooltip-container" style="cursor:pointer;" onclick="ativarInput('cnes')">
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label for="senha" class="form-label fw-bold">Senha:</label>
+                    <label for="senha" class="form-label fw-bold"><i class="fa-solid fa-lock me-2"></i>Senha:</label>
                     <div class="d-flex align-items-center">
                         <input type="password" class="form-control me-2" id="senha" name="senha" minlength="8" readonly value="********">
-                        <img src="img/lapis.png" alt="Editar" class="btn-editar" style="cursor:pointer;" onclick="ativarInputSenha('senha')">
+                        <span class="tooltip-text">Esta é a pequena caixa de texto! 🚀</span>
+                        <img src="img/lapis.png" alt="Editar" class="btn-editar tooltip-container" style="cursor:pointer;" onclick="ativarInputSenha('senha')">
                     </div>
                 </div>
 
                 <div class="mb-3 d-none" id="confirmar">
-                    <label for="txtConfirmSenha" class="form-label estilo-label">Confirmar Senha:</label>
+                    <label for="txtConfirmSenha" class="form-label estilo-label"><i class="fa-solid fa-lock me-2"></i>Confirmar Senha:</label>
                     <input type="password" class="form-control classe-senha" id="txtConfirmSenha" name="comfsenha" minlength="8" placeholder="Mínimo de 8 caracteres">
                     <div id="senhaFeedback" class="form-text text-warning fw-bold" style="display:none;">As senhas não são iguais.</div>
                     <div class="mb-3 form-check"> 

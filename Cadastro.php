@@ -74,11 +74,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
         
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+        <!-- Font Awesome Adicionado para os ícones funcionarem -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
         <link rel="stylesheet" href="src/main-style.css">
         
@@ -153,21 +152,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                     <li><a href="index.html" id="inicio">Início</a></li>
                     <li><a href="contato.php" class="botoes " id="contato1">Contato</a></li>
                     <li><a href="login.php" class=" botoes fw-bold text-decoration-underline" id="entre" >Entre</a></li>
-                    <!-- <div class="theme-switch-wrapper">
-                        <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
+                    <div class="theme-switch-wrapper">
+                        <span class="theme-icon sun-icon" id="mode-label">☀️</span>
                         <label class="theme-switch" for="checkbox">
-                            <input type="checkbox" id="checkbox" />
-                            <div class="slider round"></div>
+                            <input type="checkbox" id="checkbox">
+                            <span class="slider round"></span>
                         </label>
-                    </div> -->
-                                        <div class="theme-switch-wrapper">
-    <span class="theme-icon sun-icon" id="mode-label">☀️</span>
-    <label class="theme-switch" for="checkbox">
-        <input type="checkbox" id="checkbox">
-        <span class="slider round"></span>
-    </label>
-    <span class="theme-icon moon-icon">🌙</span>
-</div>
+                        <span class="theme-icon moon-icon">🌙</span>
+                    </div>
                 </ul>
                 <div class="menu-toggle" id="mobile-menu">
                     <span class="bar"></span>
@@ -177,7 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             </nav>  
 </header>
 
-        <main class="flex-grow-1 d-flex align-items-center justify-content-center py-5">
+        <main class="flex-grow-1 d-flex align-items-center justify-content-center">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-12 d-flex justify-content-center">
@@ -189,22 +181,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                                 
                                 <form method="POST" action="" id="formCadastro">
                                     <div class="mb-3">
-                                        <label for="txtEmail" class="form-label estilo-label">E-mail:</label>
+                                        <label for="txtEmail" class="form-label estilo-label"><i class="fa-regular fa-envelope"></i>&nbsp;E-mail:</label>
                                         <input type="email" class="form-control" id="txtEmail" name="email" required placeholder="Digite um e-mail valido.">
                                     </div>
                                     
                                     <div class="mb-3">
-                                        <label for="txtNome" class="form-label estilo-label">Nome da Instituição:</label>
+                                        <label for="txtNome" class="form-label estilo-label"><i class="fa-solid fa-user"></i>&nbsp;Nome da Instituição:</label>
                                         <input type="text" class="form-control" id="txtNome" name="nome" required placeholder="Digite o nome da instituição por extenso, sem abreviações.">
                                     </div>
                                     
                                     <div class="mb-3">
-                                        <label for="telefone" class="form-label estilo-label">Telefone:</label>
+                                        <label for="telefone" class="form-label estilo-label"><i class="fa-solid fa-tty"></i>&nbsp;Telefone:</label>
                                         <input type="tel" class="form-control" id="telefone" placeholder="(XX) 9XXXX-XXXX" maxlength="15" name="telefone" required>
                                     </div>
                                     
                                     <div class="mb-3">
-                                        <label for="txtCep" class="form-label estilo-label">CEP:</label>
+                                        <label for="txtCep" class="form-label estilo-label"><i class="fa-solid fa-map-marker-alt"></i>&nbsp;CEP:</label>
                                         <input type="text" class="form-control" id="txtCep" placeholder="XXXXX-XXX" maxlength="9" name="cep" required>
                                     </div>
                                     
@@ -213,42 +205,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="txtRua" class="form-label estilo-label">Rua:</label>
+                                        <label for="txtRua" class="form-label estilo-label"><i class="fa-solid fa-road"></i>&nbsp;Rua:</label>
                                         <input type="text" class="form-control" placeholder="Preenchimento automático" id="txtRua" name="rua" readonly>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="txtCidade" class="form-label estilo-label">Cidade:</label>
+                                        <label for="txtCidade" class="form-label estilo-label"><i class="fa-solid fa-city"></i>&nbsp;Cidade:</label>
                                         <input type="text" class="form-control" id="txtCidade" name="cidade" readonly placeholder="Preenchimento automático">
                                     </div>
                                     
                                     <div class="mb-3">
-                                        <label for="txtBairro" class="form-label estilo-label">Bairro:</label>
+                                        <label for="txtBairro" class="form-label estilo-label"><i class="fa-solid fa-building"></i>&nbsp;Bairro:</label>
                                         <input type="text" class="form-control" id="txtBairro" name="bairro" readonly placeholder="Preenchimento automático">
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="txtEstado" class="form-label estilo-label">Estado:</label>
+                                        <label for="txtEstado" class="form-label estilo-label"><i class="fa-solid fa-flag"></i>&nbsp;Estado:</label>
                                         <input type="text" class="form-control" id="txtEstado" name="estado" readonly placeholder="Preenchimento automático">
                                     </div>
                                     
                                     <div class="mb-3">
-                                        <label for="txtCNPJ" class="form-label estilo-label">CNPJ(Cadastro Nacional da Pessoa Jurídica):</label>
+                                        <label for="txtCNPJ" class="form-label estilo-label"><i class="fa-solid fa-id-card"></i>&nbsp;CNPJ(Cadastro Nacional da Pessoa Jurídica):</label>
                                         <input type="text" id="CNPJ" class="form-control" oninput="mascaraCNPJ(this)" name="CNPJ" maxlength="18" placeholder="00.000.000/0000-00">
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="txtCNES" class="form-label estilo-label">Registro CNES(Cadastro Nacional de Estabelecimentos de Saúde):</label>
+                                        <label for="txtCNES" class="form-label estilo-label"><i class="fa-solid fa-hospital"></i>&nbsp;Registro CNES(Cadastro Nacional de Estabelecimentos de Saúde):</label>
                                         <input type="text" class="form-control" id="txtCNES" name="CNES" placeholder="XXXXXXX" maxlength="7" required>
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="txtSenha" class="form-label estilo-label">Senha:</label>
+                                        <label for="txtSenha" class="form-label estilo-label"><i class="fa-solid fa-lock me-2"></i>Senha:</label>
                                         <input type="password" class="form-control classe-senha" id="txtSenha" name="senha" minlength="8" placeholder="Mínimo de 8 caracteres" required>
                                     </div>
                                     
                                     <div class="mb-3">
-                                        <label for="txtConfirmSenha" class="form-label estilo-label">Confirmar Senha:</label>
+                                        <label for="txtConfirmSenha" class="form-label estilo-label"><i class="fa-solid fa-lock me-2"></i>Confirmar Senha:</label>
                                         <input type="password" class="form-control classe-senha" id="txtConfirmSenha" name="comfsenha" minlength="8" placeholder="Mínimo de 8 caracteres" required>
                                         <div id="senhaFeedback" class="form-text text-warning fw-bold" style="display:none;">As senhas não são iguais.</div>
                                     </div>
@@ -284,6 +276,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
                 <h3 class="text-center container" id="copy">&copy; HealthSense Systems</h3>
             </div>
         </footer>
+
+        <!-- JS do Bootstrap Bundle (que já possui Popper.js integrado) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
         <script src="js/main-script.js"></script>
         <script src="js/scripts.js"></script>

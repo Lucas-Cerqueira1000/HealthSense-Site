@@ -9,24 +9,12 @@
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-        <link rel="stylesheet" href="../bootstrap-5.3.8-dist/css/bootstrap.css">
         <link
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
             rel="stylesheet"
             integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
             crossorigin="anonymous"
         />
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
-        ></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" href="src/main-style.css">
         <style>
@@ -152,6 +140,7 @@
             }
             .faq-answer {
                 background-color: var(--verdeescuro);
+                animation: none !important; /* Desativa a animação CSS padrão para evitar sobressaltos */
             }
             .faq-answer-content {
                 padding: 16px 20px;
@@ -189,6 +178,7 @@
                 transition: opacity 0.3s ease;
                 background-color: var(--verdeescuro);
                 color: white;
+                border-color: transparent;
             }
             #texto
             {
@@ -436,19 +426,17 @@
                 background-color: var(--verdeescuro);
             }
             .accordion-button.collapsed {
-    background-color: #f8f9fa; /* Substitua pela cor desejada */
-    color: #000000;
-}
-/* Altera a cor do texto da resposta apenas quando aberto */
-.accordion-collapse.show .accordion-body {
-    color: #000000; /* Insira a cor desejada aqui */
-}
-/* Estilo quando o botão está aberto */
-.accordion-button:not(.collapsed) {
-    background-color: #f8f9fa; /* Defina a cor de fundo desejada */
-    color: #000000;            /* Defina a cor do texto desejada */
-    box-shadow: none;          /* Opcional: remove o contorno azul de foco */
-}
+                background-color: #f8f9fa;
+                color: #000000;
+            }
+            .accordion-collapse.show .accordion-body {
+                color: #000000;
+            }
+            .accordion-button:not(.collapsed) {
+                background-color: #f8f9fa;
+                color: #000000;
+                box-shadow: none;
+            }
         </style>
     </head>
     <body>
@@ -470,27 +458,20 @@
                 <div class="logo fs-3">
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" id="logo1">
                 </div>
-                <ul class="nav-links ">
+                <ul class="nav-links">
                     <li><a href="" class="fw-bold text-decoration-underline links" id="inicio">Início</a></li>
                     <li><a href="contato.php" class="botoes links" id="contato1">Contato</a></li>
                     <li><a href="login.php" class="botoes links" id="entre">Entre</a></li>
-                    <!-- <div class="theme-switch-wrapper">
-                    <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
-                    <label class="theme-switch" for="checkbox">
-                        <input type="checkbox" id="checkbox" />
-                        <div class="slider round"></div>
-                    </label>
-                    </div>   -->
                     <div class="theme-switch-wrapper">
-    <span class="theme-icon sun-icon" id="mode-label">☀️</span>
-    <label class="theme-switch" for="checkbox">
-        <input type="checkbox" id="checkbox">
-        <span class="slider round"></span>
-    </label>
-    <span class="theme-icon moon-icon">🌙</span>
-</div>
+                        <span class="theme-icon sun-icon" id="mode-label">☀️</span>
+                        <label class="theme-switch" for="checkbox">
+                            <input type="checkbox" id="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="theme-icon moon-icon">🌙</span>
+                    </div>
                 </ul>
-                <div class="menu-toggle bg-" id="mobile-menu">
+                <div class="menu-toggle" id="mobile-menu">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -507,7 +488,7 @@
                   <i class="fa-solid fa-a"></i><i class="fa-solid fa-plus"></i>
               </button>
           </div>
-            <img src="img/teste8.png" class="img-fluid rounded mx-auto d-block" alt="logo do health sense" height="400px" width="400px" id="logo">
+            <img src="img/teste10.png" class="img-fluid rounded mx-auto d-block" alt="logo do health sense" height="400px" width="400px" id="logo">
             <br>
             <section id="nosso_projeto">
                 <h1 class="text-center fw-bold texto-revelar" id="sobre_nosso_projeto">Sobre o nosso projeto</h1>
@@ -647,42 +628,10 @@
                 </model-viewer>
             </section><br>  
             <br>
-            <h4 class="text-center fw-bold">Modelo 3D gerado na ferramenta "MESHY AI".</h4>
+            <!-- <h4 class="text-center fw-bold">Modelo 3D gerado na ferramenta "MESHY AI".</h4> -->
             <section class="faq-container" id="FAQ">
                 <h2>Dúvidas Frequentes</h2>
                 <p class="faq-subtitle">Clique na pergunta para ver a resposta</p>
-                <!-- <div class="accordion accordion-flush" id="accordionFlushExample">
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-        Accordion Item #1
-      </button>
-    </h2>
-    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item’s accordion body.</div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-        Accordion Item #2
-      </button>
-    </h2>
-    <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item’s accordion body. Let’s imagine this being filled with some actual content.</div>
-    </div>
-  </div>
-  <div class="accordion-item">
-    <h2 class="accordion-header">
-      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
-        Accordion Item #3
-      </button>
-    </h2>
-    <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-      <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item’s accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
-    </div>
-  </div>
-</div> -->
                 <details class="faq-item">
                     <summary class="faq-question">O que é o nosso projeto?</summary>
                     <div class="faq-answer">
@@ -744,7 +693,7 @@
         </main>
         <footer class="mt-auto container-fluid vw-100 text-center">
             <div class="text-center container">
-                <h3 class="text-center container" id="copy">&copy HealthSense Systems</h3>
+                <h3 class="text-center container" id="copy">&copy; HealthSense Systems</h3>
                 <section id="redes" class="text-center container">
                     <a href="https://www.instagram.com/projeto_healthsense?utm_source=qr&igsh=bmk0cno3cTBmbTly" target="_blank">
                          <i class="fa-brands fa-instagram display-3"></i>
@@ -752,6 +701,10 @@
                 </section>
             </div>
         </footer>
+
+        <!-- JS do Bootstrap (Bundle único que já contém o Popper.js) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
         <script src="js/main-script.js"></script>
         <script src="js/scripts.js"></script>
         <script src="js/audio.js"></script>
@@ -775,15 +728,15 @@
                 });
 
                 function openFAQ() {
-                    details.style.height = `${details.offsetHeight}px`;
+                    const startHeight = details.offsetHeight;
                     details.open = true;
-                    window.requestAnimationFrame(() => expand());
+                    const endHeight = summary.offsetHeight + answer.offsetHeight;
+
+                    expand(startHeight, endHeight);
                 }
 
-                function expand() {
+                function expand(startHeight, endHeight) {
                     isExpanding = true;
-                    const startHeight = details.offsetHeight;
-                    const endHeight = summary.offsetHeight + answer.offsetHeight;
 
                     if (animation) animation.cancel();
 
@@ -969,28 +922,6 @@
                     elemento.style.fontSize = novoTamanho + 'px';
                 });
             }
-        </script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-    const mobileMenu = document.getElementById("mobile-menu");
-    const navLinks = document.querySelector(".nav-links");
-
-    if (mobileMenu && navLinks) {
-        mobileMenu.addEventListener("click", function () {
-            mobileMenu.classList.toggle("active");
-            navLinks.classList.toggle("active");
-        });
-    }
-});
-        </script>
-        <script>
-            const accordionCollapseElementList = document.querySelectorAll('#myAccordion .collapse')
-const accordionCollapseList = [...accordionCollapseElementList].map(accordionCollapseEl => new bootstrap.Collapse(accordionCollapseEl))
-        </script>
-        <script>
-            const bsCollapse = new bootstrap.Collapse('#myCollapse', {
-  toggle: false
-})
         </script>
     </body>
 </html>
