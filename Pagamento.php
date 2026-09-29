@@ -1,39 +1,39 @@
 <?php 
-session_start();
+// session_start();
 
-if(!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
-    exit;
-}
+// if(!isset($_SESSION['usuario_id'])) {
+//     header("Location: login.php");
+//     exit;
+// }
 
-// Configurações do Banco de Dados
-$host = 'tcc_bd35.mysql.dbaas.com.br';
-$dbname = 'tcc_bd35';
-$username = 'tcc_bd35';
-$password = 'ROSA123456a#';
+// // Configurações do Banco de Dados
+// $host = 'tcc_bd35.mysql.dbaas.com.br';
+// $dbname = 'tcc_bd35';
+// $username = 'tcc_bd35';
+// $password = 'ROSA123456a#';
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// try {
+//     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
+//     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Busca as informações atualizadas do hospital logado
-    $stmt = $pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
-    $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
-    $stmt->execute();
-    $dadosHospital = $stmt->fetch(PDO::FETCH_ASSOC);
+//     // Busca as informações atualizadas do hospital logado
+//     $stmt = $pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
+//     $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
+//     $stmt->execute();
+//     $dadosHospital = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    if (!$dadosHospital) {
-        echo "Dados do hospital não encontrados.";
-        exit;
-    }
+//     if (!$dadosHospital) {
+//         echo "Dados do hospital não encontrados.";
+//         exit;
+//     }
     
-    // Força a atualização do nome da sessão com o dado real vindo do banco
-    $_SESSION['usuario_nome'] = $dadosHospital['nome'];
+//     // Força a atualização do nome da sessão com o dado real vindo do banco
+//     $_SESSION['usuario_nome'] = $dadosHospital['nome'];
 
-} catch (PDOException $e) {
-    echo "Erro na conexão: " . $e->getMessage();
-    exit;
-}
+// } catch (PDOException $e) {
+//     echo "Erro na conexão: " . $e->getMessage();
+//     exit;
+// }
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -189,36 +189,47 @@ try {
                 <div class="logo fs-3">
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
-                <div class="theme-switch-wrapper">
-                    <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
-                    <label class="theme-switch" for="checkbox">
-                        <input type="checkbox" id="checkbox" />
-                        <div class="slider round"></div>
-                    </label>
-                </div>
-                <ul class="nav-links fs-3">
-                    <!-- <li><a href="inicio.php" class="botoes1">Início</a></li>
-                    <li><a href="Comprar.php" class="fw-bold text-decoration-underline botoes1">Comprar Pulseira</a></li>
-                    <a href="Index.html" class="botoes2">Deslogar</a> -->
+                <ul class="nav-links text-center" id="links">
+                    <li><a href="inicial.php" class="botoes1">Início</a></li>
+                    <li><a href="inicio.php" class="botoes1">Seus Dados</a></li>
+                    <li><a href="Comprar.php" class="botoes1">Comprar Pulseira</a></li>
+                    <li><a href="Tutorial.php" class="botoes1">Tutorial</a></li>
+                    <li><a href="Suporte.php" class="botoes1 fw-bold text-decoration-underline links">Suporte Técnico</a></li>
+                    <a href="Index.html" class="botoes2">Deslogar</a>
+                    <!-- <div class="theme-switch-wrapper">
+                        <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
+                        <label class="theme-switch" for="checkbox">
+                            <input type="checkbox" id="checkbox" />
+                            <div class="slider round"></div>
+                        </label>
+                    </div> -->
+                                        <div class="theme-switch-wrapper">
+    <span class="theme-icon sun-icon" id="mode-label">☀️</span>
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox">
+        <span class="slider round"></span>
+    </label>
+    <span class="theme-icon moon-icon">🌙</span>
+</div>
                 </ul>
-
-                <!-- <div class="menu-toggle" id="mobile-menu">
+                <div class="menu-toggle" id="mobile-menu">
                     <span class="bar"></span>
                     <span class="bar"></span>
                     <span class="bar"></span>
-                </div> -->
-            </nav>   
+                </div>
+            </nav>  
         </header>
-        <main class="flex flex-col min-h-screen vw-100 p-0">
+        <main class="flex flex-col min-h-screen w-full">
             <!-- <h1 class="fw-bold text-center">Olá, <?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?>!</h1> -->
             <!-- <h2 class="text-center">Aqui você pode adquirir o produto da Health Sense Services.</h2> -->
              <br>
             <section id="principal">
                 <section id="produto">
+                    
                     <h3 class="text-center">Selecione abaixo a forma de pagamento desejada</h3>
                     <form action="">
                         <div class="d-flex justify-content-center align-items-center gap-2 my-2">
-    <label for="qtd" class="fw-bold fs-5 m-0">Quantidade:</label>
+    <label for="qtd" class="fw-bold fs-5 m-0">Quantidade (Max. 20):</label>
     <input type="number" class="form-control text-center" name="qtd" id="qtd" value="1" min="1" max="20">
 </div>
 

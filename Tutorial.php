@@ -1,40 +1,36 @@
 <?php 
-session_start();
+// session_start();
 
-if(!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
-    exit;
-}
+// if(!isset($_SESSION['usuario_id'])) {
+//     header("Location: login.php");
+//     exit;
+// }
 
-// Configurações do Banco de Dados
-$host = 'tcc_bd35.mysql.dbaas.com.br';
-$dbname = 'tcc_bd35';
-$username = 'tcc_bd35';
-$password = 'ROSA123456a#';
+// // Configurações do Banco de Dados
+// $host = 'tcc_bd35.mysql.dbaas.com.br';$dbname = 'tcc_bd35';
+// $username = 'tcc_bd35';$password = 'ROSA123456a#';
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// try {
+//     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Busca as informações atualizadas do hospital logado
-    $stmt = $pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
-    $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);
-    $stmt->execute();
-    $dadosHospital = $stmt->fetch(PDO::FETCH_ASSOC);
+//     // Busca as informações atualizadas do hospital logado
+//     $stmt =$pdo->prepare("SELECT * FROM `tabHospitais` WHERE ID = :id");
+//     $stmt->bindParam(':id', $_SESSION['usuario_id'], PDO::PARAM_INT);$stmt->execute();
+//     $dadosHospital =$stmt->fetch(PDO::FETCH_ASSOC);
     
-    if (!$dadosHospital) {
-        echo "Dados do hospital não encontrados.";
-        exit;
-    }
+//     if (!$dadosHospital) {
+//         echo "Dados do hospital não encontrados.";
+//         exit;
+//     }
     
-    // Força a atualização do nome da sessão com o dado real vindo do banco
-    $_SESSION['usuario_nome'] = $dadosHospital['nome'];
+//     // Força a atualização do nome da sessão com o dado real vindo do banco
+//     $_SESSION['usuario_nome'] =$dadosHospital['nome'];
 
-} catch (PDOException $e) {
-    // echo "Erro na conexão: " . $e->getMessage();
-    header("Location: erro_conexao.php");
-    exit;
-}
+// } catch (PDOException $e) {
+//     // echo "Erro na conexão: " . $e->getMessage();
+//     header("Location: erro_conexao.php");
+//     exit;
+// }
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -68,227 +64,250 @@ try {
         <script src="https://kit.fontawesome.com/f2c06f6363.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="src/main-style.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    </head>
-    <style>
-        body {
-            color: white;
-        }
-        main {
-            gap: 20px;
-        }
-        #principal {
-            background-color: var(--verde);
-            width: 80vw;
-            margin: 0 auto;
-            gap: 40px;
-            color: white;
-            border-radius: 50px;
-        }
-
-        /* ALTERAÇÕES DO CARROSSEL CUSTOMIZADO */
-        .carousel-container {
-            position: relative;
-            max-width: 800px;
-            margin: auto;
-            overflow: hidden; 
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-
-        .carousel-slide {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-            width: 100%;
-        }
-
-        .custom-carousel-item {
-            min-width: 100%;
-            width: 100%;
-            position: relative;
-            display: block; 
-        }
-
-        .custom-carousel-item img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .caption {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: #f2f2f2;
-            text-align: center;
-            padding: 15px 0;
-            font-size: 18px;
-            z-index: 2;
-        }
-
-        .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            width: auto;
-            padding: 16px;
-            margin-top: -35px;
-            color: white;
-            font-weight: bold;
-            font-size: 24px;
-            transition: 0.6s ease;
-            border-radius: 0 3px 3px 0;
-            user-select: none;
-            background-color: rgba(0,0,0,0.4);
-            border: none;
-            z-index: 10;
-        }
-
-        .next {
-            right: 0;
-            border-radius: 3px 0 0 3px;
-        }
-
-        .prev:hover, .next:hover {
-            background-color: rgba(0,0,0,0.8);
-        }
-
-        @media(max-width: 845px) {
-            .carousel-container {
-                transform: scale(0.8);
+        <style>
+            body {
+                color: white;
             }
-        }
-
-        #prints {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            flex-wrap: wrap;
-            border-radius: 150px;
-        }
-
-        #produto {
-            font-size: 20px;
-        }
-
-        /* --- CORREÇÕES DE RESPONSIVIDADE E TABELAS --- */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        /* Permite a quebra de palavras muito longas nas células */
-        table td, table th {
-            word-break: break-word;
-            overflow-wrap: break-word;
-        }
-
-        /* Classe para permitir rolagem horizontal em telas muito pequenas */
-        .table-responsive-custom {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        /* Ajustes específicos para telas abaixo de 380px */
-        @media (max-width: 380px) {
+            main {
+                gap: 20px;
+            }
             #principal {
-                width: 95vw; /* Aumenta a área visível do container */
-                border-radius: 20px; /* Borda mais suave para não espremer */
+                background-color: var(--verde);
+                width: 80vw;
+                margin: 0 auto;
+                gap: 40px;
+                color: white;
+                border-radius: 50px;
             }
 
-            #tecnicas {
-                padding-left: 5px;
-                padding-right: 5px;
+            /* ALTERAÇÕES DO CARROSSEL CUSTOMIZADO */
+            .carousel-container {
+                position: relative;
+                max-width: 800px;
+                margin: auto;
+                overflow: hidden; 
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             }
 
-            table th, table td {
-                padding: 4px !important;
-                font-size: 13px; /* Reduz levemente o texto para caber nas colunas */
+            .carousel-slide {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+                width: 100%;
             }
 
-            h1 {
-                font-size: 1.5rem !important;
+            .custom-carousel-item {
+                min-width: 100%;
+                width: 100%;
+                position: relative;
+                display: block; 
             }
 
-            h3 {
-                font-size: 1.2rem !important;
+            .custom-carousel-item img {
+                width: 100%;
+                height: auto;
+                display: block;
             }
-        }
-        @media(max-width:650px)
-        {
-          .carousel-container
-          {
-            transform: scale(0.9);
-          }
-        }
-        #dinheiro
-        {
-          /* background-color: var(--vermelho); */
-          /* width: 30px; */
-        }
 
-        /* Garante que os SVG e ícones tenham o mesmo tamanho e comportamento */
-        .icon-pix, .icon-boleto {
-            width: 1em;
-            height: 1em;
-            font-size: 5rem; /* Tamanho equivalente à classe display-1 */
-            display: inline-block;
-            vertical-align: middle;
-        }
+            .caption {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                background-color: rgba(0, 0, 0, 0.6);
+                color: #f2f2f2;
+                text-align: center;
+                padding: 15px 0;
+                font-size: 18px;
+                z-index: 2;
+            }
 
-        /* Alinhamento flexível para os itens de pagamento */
-        .opcao-pagamento {
-            display: flex;
-            align-items: center;
-            gap: 15px; /* Espaçamento entre ícone e texto */
-            margin-bottom: 15px;
-        }
-        .oculto 
-        {
-            opacity: 0;
-            pointer-events: none; 
-        }
-        #accordionFlushExample
-        {
-            max-width: 130px;
-        }
-        .alert-primary, .alert-success, .alert-danger
-        {
-            transform: scale(0.9);
-        }
-    </style>
+            .prev, .next {
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                width: auto;
+                padding: 16px;
+                margin-top: -35px;
+                color: white;
+                font-weight: bold;
+                font-size: 24px;
+                transition: 0.6s ease;
+                border-radius: 0 3px 3px 0;
+                user-select: none;
+                background-color: rgba(0,0,0,0.4);
+                border: none;
+                z-index: 10;
+            }
+
+            .next {
+                right: 0;
+                border-radius: 3px 0 0 3px;
+            }
+
+            .prev:hover, .next:hover {
+                background-color: rgba(0,0,0,0.8);
+            }
+
+            @media(max-width: 845px) {
+                .carousel-container {
+                    transform: scale(0.8);
+                }
+            }
+
+            #prints {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                flex-wrap: wrap;
+                border-radius: 150px;
+            }
+
+            #produto {
+                font-size: 20px;
+            }
+
+            /* --- CORREÇÕES DE RESPONSIVIDADE E TABELAS --- */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            table td, table th {
+                word-break: break-word;
+                overflow-wrap: break-word;
+            }
+
+            .table-responsive-custom {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            @media (max-width: 380px) {
+                #principal {
+                    width: 95vw;
+                    border-radius: 20px;
+                }
+
+                #tecnicas {
+                    padding-left: 5px;
+                    padding-right: 5px;
+                }
+
+                table th, table td {
+                    padding: 4px !important;
+                    font-size: 13px;
+                }
+
+                h1 {
+                    font-size: 1.5rem !important;
+                }
+
+                h3 {
+                    font-size: 1.2rem !important;
+                }
+            }
+            @media(max-width:650px) {
+              .carousel-container {
+                transform: scale(0.9);
+              }
+            }
+
+            .icon-pix, .icon-boleto {
+                width: 1em;
+                height: 1em;
+                font-size: 5rem;
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .opcao-pagamento {
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                margin-bottom: 15px;
+            }
+            .oculto {
+                opacity: 0;
+                pointer-events: none; 
+            }
+            #accordionFlushExample {
+                max-width: 130px;
+            }
+            .alert-primary, .alert-success, .alert-danger {
+                transform: scale(0.9);
+            }
+
+            /* Estilos de Modais e Zoom/Pan */
+            .custom-modal {
+              display: none; 
+              position: fixed; 
+              z-index: 1000; 
+              left: 0;
+              top: 0;
+              width: 100%;
+              height: 100%;
+              background-color: rgba(0, 0, 0, 0.85);
+              justify-content: center;
+              align-items: center;
+            }
+
+            .fechar-modal {
+              position: absolute;
+              top: 20px;
+              right: 35px;
+              color: #fff;
+              font-size: 40px;
+              font-weight: bold;
+              cursor: pointer;
+              z-index: 1001;
+            }
+
+            .zoom-viewport {
+                width: 80vw;
+                height: 80vh;
+                overflow: hidden;
+                position: relative;
+                cursor: grab;
+                user-select: none;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .zoom-viewport:active {
+                cursor: grabbing;
+            }
+
+            .zoom-viewport img {
+                max-width: 100%;
+                max-height: 100%;
+                transition: transform 0.05s ease-out;
+                transform-origin: center center;
+            }
+        </style>
+    </head>
     <body>
         <header>
-            <!-- <p id="texto">Voltar ao topo.</p>
-            <button id="btn-topo" class="oculto">↑</button> -->
             <nav class="navbar">
                 <div class="overlay"></div>
                 <div class="logo fs-3">
                     <img src="img/Logo.png" alt="" class="img-fluid ms-5" width="190px" height="150px" id="logo1">
                 </div>
-                <ul class="nav-links ">
-                    <li><a href="inicial.php" class="botoes1 ">Início</a></li>
+                <ul class="nav-links">
+                    <li><a href="inicial.php" class="botoes1">Início</a></li>
                     <li><a href="inicio.php" class="botoes1">Seus Dados</a></li>
-                    <li><a href="Comprar.php" class=" botoes1">Comprar Pulseira</a></li>
+                    <li><a href="Comprar.php" class="botoes1">Comprar Pulseira</a></li>
                     <li><a href="Tutorial.php" class="botoes1 fw-bold text-decoration-underline">Tutorial</a></li>
                     <li><a href="Suporte.php" class="botoes1">Suporte Técnico</a></li>
                     <a href="Index.html" class="botoes2">Deslogar</a>
-                    <!-- <div class="theme-switch-wrapper">
-                        <span id="mode-label" class="fw-bold text-white">Trocar Tema</span>
+                    <div class="theme-switch-wrapper">
+                        <span class="theme-icon sun-icon" id="mode-label">☀️</span>
                         <label class="theme-switch" for="checkbox">
-                            <input type="checkbox" id="checkbox" />
-                            <div class="slider round"></div>
+                            <input type="checkbox" id="checkbox">
+                            <span class="slider round"></span>
                         </label>
-                    </div> -->
-                                        <div class="theme-switch-wrapper">
-    <span class="theme-icon sun-icon" id="mode-label">☀️</span>
-    <label class="theme-switch" for="checkbox">
-        <input type="checkbox" id="checkbox">
-        <span class="slider round"></span>
-    </label>
-    <span class="theme-icon moon-icon">🌙</span>
-</div>
+                        <span class="theme-icon moon-icon">🌙</span>
+                    </div>
                 </ul>
 
                 <div class="menu-toggle" id="mobile-menu">
@@ -298,25 +317,46 @@ try {
                 </div>
             </nav>   
         </header>
-        <main class="flex flex-col min-h-screen vw-100 ">
+
+        <main class="flex flex-col min-h-screen vw-100">
             <h1 class="fw-bold text-center">Aqui, <?php echo htmlspecialchars($_SESSION['usuario_nome'] ?? 'Usuário'); ?> você encontrará os tutoriais de utilização do nosso produto.</h1>
-            <!-- <h2 class="text-center">Aqui você pode adquirir o produto da Health Sense Services.</h2> -->
             
             <section id="principal">
                 <section id="produto"><br>
-                <!-- <a href="img/Tutorial_Colocar_Pulseira.png">Tutorial de colocação da pusleira no braço do paciente.</a><br> -->
                  <div class="alert alert-primary" role="alert">
- Tutorial de colocação da <a href="img/Tutorial_Colocar_Pulseira.png" class="alert-link">pulseira</a>&nbsp;no braço do paciente..
-</div>
+                    Tutorial de colocação da <a href="#" class="alert-link" id="abrirModal">pulseira</a>&nbsp;no braço do paciente..
+                 </div>
+                 <!-- Modal 1 -->
+                 <div id="meuModal" class="custom-modal">
+                   <span class="fechar-modal">&times;</span>
+                   <div class="zoom-viewport">
+                       <img id="imagemAmpliada" alt="Imagem ampliada">
+                   </div>
+                 </div>
 
                  <div class="alert alert-success" role="alert">
-  Tutorial de remoção da <a href="img/Tutorial_Remocao_Pulseira.png" class="alert-link">pulseira</a> do braço do paciente.
-</div>
+                    Tutorial de remoção da <a href="#" class="alert-link" id="abrirModal1">pulseira</a> do braço do paciente.
+                 </div>
+                 <!-- Modal 2 -->
+                 <div id="meuModal1" class="custom-modal">
+                   <span class="fechar-modal">&times;</span>
+                   <div class="zoom-viewport">
+                       <img id="imagemAmpliada1" alt="Imagem ampliada">
+                   </div>
+                 </div>
+
                  <div class="alert alert-danger" role="alert">
-  Tutorial de troca da bateria da <a href="img/Tutorial_Troca_Bateria" class="alert-link">pulseira</a>.
-</div>
+                    Tutorial de troca da bateria da <a href="#" class="alert-link" id="abrirModal2">pulseira</a>.
+                 </div>
+                 <!-- Modal 3 -->
+                 <div id="meuModal2" class="custom-modal">
+                   <span class="fechar-modal">&times;</span>
+                   <div class="zoom-viewport">
+                       <img id="imagemAmpliada2" alt="Imagem ampliada">
+                   </div>
+                 </div>
+                </section>
             </section>   
-            <!-- <div class="my-5 py-3"></div> -->
         </main>
         
         <footer class="mt-auto container-fluid vw-100 text-center">
@@ -328,10 +368,9 @@ try {
         <script src="js/main-script.js"></script>
         <script src="js/scripts.js"></script>
         <script src="js/header.js"></script>
+
+        <!-- Carrossel e Botão Topo -->
         <script>
-        // ==========================================
-        // CARROSSEL CORRIGIDO
-        // ==========================================
         let slideIndex = 0;
         let timer = null;
 
@@ -386,16 +425,18 @@ try {
             startTimer();
         }
 
-        document.querySelector('.carousel-container').addEventListener('mouseenter', () => {
-            clearInterval(timer);
-        });
+        const carouselElem = document.querySelector('.carousel-container');
+        if (carouselElem) {
+            carouselElem.addEventListener('mouseenter', () => {
+                clearInterval(timer);
+            });
+            carouselElem.addEventListener('mouseleave', () => {
+                startTimer();
+            });
+        }
 
-        document.querySelector('.carousel-container').addEventListener('mouseleave', () => {
-            startTimer();
-        });
-        </script>
-        <script>
-                const btnTopo = document.getElementById("btn-topo");
+        const btnTopo = document.getElementById("btn-topo");
+        if (btnTopo) {
             window.addEventListener("scroll", function() {
                 if (window.scrollY > 300) {
                     btnTopo.classList.remove("oculto");
@@ -409,6 +450,134 @@ try {
                     behavior: "smooth"
                 });
             });
+        }
+        </script>
+
+        <!-- Abertura dos Modais -->
+        <script>
+            // MODAL 1
+            const link = document.getElementById("abrirModal");
+            const modal = document.getElementById("meuModal");
+            const imagemModal = document.getElementById("imagemAmpliada");
+            const urlDaImagem = "img/Tutorial_Colocar_Pulseira.png"; 
+
+            if (link) {
+                link.onclick = function(evento) {
+                    evento.preventDefault();
+                    modal.style.display = "flex";
+                    imagemModal.src = urlDaImagem;
+                }
+            }
+
+            // MODAL 2
+            const link1 = document.getElementById("abrirModal1");
+            const modal1 = document.getElementById("meuModal1");
+            const imagemModal1 = document.getElementById("imagemAmpliada1");
+            const urlDaImagem1 = "img/Tutorial_Remocao_Pulseira.png"; 
+
+            if (link1) {
+                link1.onclick = function(evento) {
+                    evento.preventDefault();
+                    modal1.style.display = "flex";
+                    imagemModal1.src = urlDaImagem1;
+                }
+            }
+
+            // MODAL 3
+            const link2 = document.getElementById("abrirModal2");
+            const modal2 = document.getElementById("meuModal2");
+            const imagemModal2 = document.getElementById("imagemAmpliada2");
+            const urlDaImagem2 = "img/Tutorial_Troca_Bateria.png"; 
+
+            if (link2) {
+                link2.onclick = function(evento) {
+                    evento.preventDefault();
+                    modal2.style.display = "flex";
+                    imagemModal2.src = urlDaImagem2;
+                }
+            }
+
+            // Fechar ao clicar fora ou no botão fechar
+            window.onclick = function(evento) {
+                if (evento.target.classList.contains('custom-modal') || evento.target.classList.contains('fechar-modal')) {
+                    document.querySelectorAll('.custom-modal').forEach(m => {
+                        m.style.display = "none";
+                    });
+                }
+            }
+        </script>
+
+        <!-- Lógica Geral de Zoom e Navegação pelo Mouse (Pan) -->
+        <script>
+        document.querySelectorAll('.custom-modal').forEach(modalElement => {
+            const viewport = modalElement.querySelector('.zoom-viewport');
+            const img = modalElement.querySelector('img');
+
+            if (!viewport || !img) return;
+
+            let scale = 1;
+            let pointX = 0;
+            let pointY = 0;
+            let startX = 0;
+            let startY = 0;
+            let isDragging = false;
+
+            function updateTransform() {
+                img.style.transform = `translate(${pointX}px, ${pointY}px) scale(${scale})`;
+            }
+
+            function resetZoom() {
+                scale = 1;
+                pointX = 0;
+                pointY = 0;
+                updateTransform();
+            }
+
+            // Zoom via Wheel (Scroll do mouse)
+            viewport.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                const zoomFactor = 0.15;
+                if (e.deltaY < 0) {
+                    scale = Math.min(scale + zoomFactor, 5); // limite máximo 5x
+                } else {
+                    scale = Math.max(scale - zoomFactor, 1); // limite mínimo 1x
+                }
+
+                if (scale === 1) {
+                    pointX = 0;
+                    pointY = 0;
+                }
+                updateTransform();
+            });
+
+            // Arraste (Pan) com botão do mouse
+            viewport.addEventListener('mousedown', (e) => {
+                if (scale <= 1) return;
+                e.preventDefault();
+                isDragging = true;
+                startX = e.clientX - pointX;
+                startY = e.clientY - pointY;
+            });
+
+            viewport.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                pointX = e.clientX - startX;
+                pointY = e.clientY - startY;
+                updateTransform();
+            });
+
+            viewport.addEventListener('mouseup', () => { isDragging = false; });
+            viewport.addEventListener('mouseleave', () => { isDragging = false; });
+
+            // Reseta a imagem ao fechar o modal
+            const observer = new MutationObserver(() => {
+                if (modalElement.style.display === 'none') {
+                    resetZoom();
+                }
+            });
+            observer.observe(modalElement, { attributes: true, attributeFilter: ['style'] });
+        });
         </script>
     </body>
 </html>
